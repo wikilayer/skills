@@ -10,7 +10,7 @@ Advisory reader-perspective audit. Where lint hunts micro antipatterns, review c
 
 1. Resolve target wiki from `$ARGUMENTS`. If empty, ask.
 2. `get_outline(<wiki-id>, max_depth=10)` once. Use it as the structural map.
-3. Spawn one general-purpose subagent per page. Each subagent pulls the page's `.md` projection itself (so the body never enters the caller context), runs the per-page categories below, and returns a compact verdict — proof-of-work line per clean block, full evidence (cited quote + location) per finding.
+3. Spawn one general-purpose subagent per page. Each subagent pulls the page's `.md` projection itself with `?nav=false` (strips engine breadcrumbs and auto-TOC so they don't pollute the read), runs the per-page categories below, and returns a compact verdict — proof-of-work line per clean block, full evidence (cited quote + location) per finding.
 4. Synthesize the wiki-level pass once subagent verdicts are in: cross-page contradictions, missed DRY across the whole tree, structural grouping. The caller does this — it is the only step that needs every page's verdict at once.
 5. Emit one markdown report grouped by category. Caller never writes back to the wiki.
 
