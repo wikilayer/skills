@@ -8,11 +8,12 @@ Advisory style audit. Read each block, apply the check list, emit a markdown rep
 
 ## Procedure
 
+The caller never reads page bodies. Bodies live inside subagents; the caller only sees compact verdicts.
+
 1. Resolve target wiki from `$ARGUMENTS` (numeric id or URL). If empty, ask.
-2. `get_outline(<wiki-id>, max_depth=10)` once. Use `tokens` and `child_count` on each row as first-pass signals.
-3. Read page bodies via the `.md` projection with `?nav=false` (e.g. `https://<host>/<owner>/<wiki>/<page-id>.md?nav=false`). That suppresses the engine-generated breadcrumbs and the auto `**Contents:**` TOC so you never mistake engine decoration for an author antipattern. Falls back to per-block `get_node` if the projection is unavailable (private wiki, older deploy).
-4. Walk blocks in outline order. For each, decide if any check below trips. If yes, read the body and judge in context.
-5. Emit one markdown report grouped by page, with severity tags and one-line fix suggestions.
+2. `get_outline(<wiki-id>, max_depth=10)` once. Use `tokens` and `child_count` on each row as first-pass signals to budget per-page work.
+3. Spawn one general-purpose subagent per page. Each subagent pulls its page's `.md?nav=false` projection itself (suppresses engine breadcrumbs and auto-TOC so engine decoration is never mistaken for author antipattern), runs the six checks below on each block, and returns a compact verdict: proof-of-work line per clean block, full finding with cited quote per violation. The page body never enters the caller context.
+4. Caller aggregates the per-page verdicts into one markdown report grouped by page, with severity tags and one-line fix suggestions. Caller never writes back to the wiki.
 
 ## Checks
 
