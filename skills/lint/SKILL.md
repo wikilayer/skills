@@ -12,10 +12,11 @@ The caller never reads page bodies. Bodies live inside subagents; the caller onl
 
 1. Resolve target wiki from `$ARGUMENTS` (numeric id or URL). If empty, ask.
 2. `get_outline(<wiki-id>, max_depth=10)` once. Use `tokens` and `child_count` on each row as first-pass signals to budget per-page work.
-3. Spawn one general-purpose subagent per page. Each subagent pulls its page's `.md?nav=false` projection itself (suppresses engine breadcrumbs and auto-TOC so engine decoration is never mistaken for author antipattern), runs the six checks below on each block, and returns a compact verdict: proof-of-work line per clean block, full finding with cited quote per violation. The page body never enters the caller context.
-4. Caller aggregates the per-page verdicts into one markdown report grouped by page, with severity tags and one-line fix suggestions. Caller never writes back to the wiki.
+3. Spawn one general-purpose subagent per page. Each subagent pulls its page's `.md?nav=false` projection itself (suppresses engine breadcrumbs and auto-TOC so engine decoration is never mistaken for author antipattern), runs the per-block checks below, and returns a compact verdict: proof-of-work line per clean block, full finding with cited quote per violation. The page body never enters the caller context.
+4. Caller runs the wiki-level graph checks (rule 7 below) using `get_outline(<wiki-id>, body_contains=<pattern>)` queries — no body content needed, the outline tells the story.
+5. Caller aggregates per-page verdicts + wiki-level findings into one markdown report, grouped by page (per-block) and by category (graph). Caller never writes back to the wiki.
 
-## Checks
+## Per-block checks
 
 Each is a "smart prompt": the signal flags a candidate, the agent judges whether it's a real issue in context.
 
@@ -26,8 +27,14 @@ Each is a "smart prompt": the signal flags a candidate, the agent judges whether
 5. **Same-page links.** Links from a block to another block or anchor on the same page. The reader is already scrolling this document. Cross-block jumps within a page are rare exceptions; flag and judge whether the link earns its keep.
 6. **Block bloated into page material.** Signal from outline: a block whose `tokens` are dramatically larger than its siblings, or a leaf block carrying substantial content on a self-contained subject. Two escalations: if the content belongs to the current topic, recommend decomposing into child blocks (rule 2). If the subject is a self-standing entity that recurs elsewhere in the wiki, recommend extracting it to a dedicated root page.
 
+## Wiki-level checks
+
+Run by the caller after per-page verdicts are collected. Mechanical graph queries against `get_outline`, no body content needed.
+
+7. **Orphan page.** For each page P with id N in the wiki, call `get_outline(<wiki-id>, body_contains="(page:N)")`. If the result is empty (no block anywhere in the wiki references `(page:N)`), P is reachable only via the auto-generated side nav, not from any narrative on another page. Flag — unless P is the wiki home, which by definition has no incoming wiki links. Common cause: a useful page that nobody wove into the narrative thread starting at the home.
+
 ## Severity
 
-- **Critical** — antipattern breaks the read (invented navigation, walls).
+- **Critical** — antipattern breaks the read or hides the page from readers (invented navigation, walls, orphan pages).
 - **Warning** — style violation that survives but degrades (em-dash overuse, opaque titles).
 - **Info** — judgment calls worth a look (same-page links, escalation candidates).
