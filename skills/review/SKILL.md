@@ -10,7 +10,9 @@ Advisory reader-perspective audit. Where lint hunts micro antipatterns, review c
 
 1. Resolve target wiki from `$ARGUMENTS`. If empty, ask.
 2. `get_outline(<wiki-id>, max_depth=10)` once. Use it as the structural map.
-3. Spawn one general-purpose subagent per page. Each subagent pulls the page's `.md` projection itself with `?nav=false` (strips engine breadcrumbs and auto-TOC so they don't pollute the read), runs the per-page categories below, and returns a compact verdict — proof-of-work line per clean block, full evidence (cited quote + location) per finding.
+3. Spawn one general-purpose subagent per page. Each subagent reads the page's **exact** content through the wikilayer MCP — `get_outline(<page-id>, max_depth=10, include_markdown=true)` — and sorts each node's children by their `sort_key` for reader order. It runs the per-page categories below and returns a compact verdict — proof-of-work line per clean block, full evidence (cited quote + block URL) per finding.
+
+   Read the verbatim source, never a paraphrase: do **not** WebFetch the page or its `.md`. WebFetch routes the page through a model that can silently reword or reorder content, which corrupts an exact-text audit (a block list was observed reordered this way). `get_outline` returns the raw stored markdown with no engine decoration, so there is nothing to strip.
 4. Synthesize the wiki-level pass once subagent verdicts are in: cross-page contradictions, missed DRY across the whole tree, structural grouping. The caller does this — it is the only step that needs every page's verdict at once.
 5. Emit one markdown report grouped by category. Caller never writes back to the wiki.
 
