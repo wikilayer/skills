@@ -10,8 +10,10 @@ Advisory style audit. Read each block, apply the check list, emit a markdown rep
 
 The caller never reads page bodies. Bodies live inside subagents; the caller only sees compact verdicts.
 
-1. Resolve target wiki from `$ARGUMENTS` (numeric id or URL). If empty, ask.
-2. `get_outline(<wiki-id>, max_depth=10)` once. Use `tokens` and `child_count` on each row as first-pass signals to budget per-page work.
+1. Resolve the target wiki from `$ARGUMENTS` (numeric id or URL). If empty, ask.
+
+   **Pick the language facet.** `get_outline` rows carry a `language` field. If the wiki is monolingual, the whole wiki is the facet and the rest runs unchanged. If it is multilingual, lint one language at a time: take the target language from `$ARGUMENTS` (for example `wiki 1 in en`), otherwise default to the wiki's primary language. Every check below runs on the **target-language facet** only, the nodes whose effective language is the target (an empty `language` inherits the primary). State the facet in the report header. A page's translation twin in another language is not a duplicate; checking a translation against its source is the job of `wikilayer:translations`.
+2. `get_outline(<wiki-id>, max_depth=10)` once. Use `tokens` and `child_count` on each row as first-pass signals to budget per-page work, and the `language` field to keep to the facet.
 3. Spawn one general-purpose subagent per page. Each subagent reads its page's **exact** content through the wikilayer MCP — `get_outline(<page-id>, max_depth=10, include_markdown=true)`, sorting each node's children by `sort_key` for reader order — runs the per-block checks below, and returns a compact verdict: proof-of-work line per clean block, full finding with cited quote per violation. The page body never enters the caller context.
 
    Read the verbatim source, never a paraphrase: do **not** WebFetch the page or its `.md`. WebFetch routes the page through a model that can reword or reorder it — fatal for micro checks like em-dash use or wall-of-text, which only mean anything against the exact bytes. `get_outline` returns the raw stored markdown with no engine decoration to mistake for an antipattern.
@@ -33,7 +35,7 @@ Each is a "smart prompt": the signal flags a candidate, the agent judges whether
 
 Run by the caller after per-page verdicts are collected. Mechanical graph queries against `get_outline`, no body content needed.
 
-7. **Orphan page.** For each page P with id N in the wiki, call `get_outline(<wiki-id>, body_contains="(page:N)")`. If the result is empty (no block anywhere in the wiki references `(page:N)`), P is reachable only via the auto-generated side nav, not from any narrative on another page. Flag — unless P is the wiki home, which by definition has no incoming wiki links. Common cause: a useful page that nobody wove into the narrative thread starting at the home.
+7. **Orphan page.** For each page P with id N in the facet, call `get_outline(<wiki-id>, body_contains="(page:N)")` and keep only hits whose language is the facet's. If none remain (no facet block references `(page:N)`), P is reachable only via the auto-generated side nav, not from any narrative on another page. Flag — unless P is the facet home, which by definition has no incoming wiki links. A reference from another language facet does not weave P into this one, and P having a twin in another language does not count as being linked here. Common cause: a useful page that nobody wove into the narrative thread starting at the home.
 
 ## Severity
 
