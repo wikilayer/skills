@@ -41,7 +41,7 @@ The skill fills only unambiguous gaps: a source node with no target twin and no 
 
 ## Severity
 
-- **Filled** — gaps the skill translated and linked this run. Each carries the new node URLs.
-- **Review** — structural divergence and stale translations. A human confirms whether the asymmetry is intended.
-- **Decide** — orphan nodes with no group and no exemption. A human tags them exempt or links them.
-- **Exempt** — nodes skipped by an `i18n-exempt` tag, listed so the deliberate gaps stay auditable.
+- **Filled**: gaps the skill translated and linked this run. Each carries the new node URLs.
+- **Review**: structural divergence and stale translations. A human confirms whether the asymmetry is intended.
+- **Decide**: orphan nodes with no group and no exemption. A human tags them exempt or links them.
+- **Exempt**: nodes skipped by an `i18n-exempt` tag, listed so the deliberate gaps stay auditable.
