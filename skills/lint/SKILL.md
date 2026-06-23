@@ -10,14 +10,16 @@ Advisory style audit. Read each block, apply the check list, emit a markdown rep
 
 The caller never reads page bodies. Bodies live inside subagents; the caller only sees compact verdicts.
 
-1. Resolve the target wiki from `$ARGUMENTS` (numeric id or URL). If empty, ask.
+1. Resolve the target from `$ARGUMENTS` (numeric id or URL). If empty, ask.
 
-   **Pick the language facet.** `get_outline` rows carry a `language` field. If the wiki is monolingual, the whole wiki is the facet and the rest runs unchanged. If it is multilingual, lint one language at a time: take the target language from `$ARGUMENTS` (for example `wiki 1 in en`), otherwise default to the wiki's primary language. Every check below runs on the **target-language facet** only, the nodes whose effective language is the target (an empty `language` inherits the primary). State the facet in the report header. A page's translation twin in another language is not a duplicate; checking a translation against its source is the job of `wikilayer:translations`.
+   **Scope: whole wiki or one page.** The target may be a whole wiki or a single page (its subtree). Read its `kind` with `get_outline` or `get_node`. A `wiki` target runs the full procedure; a `page` target lints only that page and its blocks (the per-block checks) and skips the wiki-level graph checks (rule 7), which need the whole tree. Use a page target for a focused pass after editing one page; a wiki target for a full audit.
+
+   **Pick the language facet.** `get_outline` rows carry a `language` field. If the wiki is monolingual, the whole wiki is the facet and the rest runs unchanged. If it is multilingual, lint one language at a time: take the target language from `$ARGUMENTS` (for example `wiki 1 in en`), otherwise default to the wiki's primary language. Every check below runs on the **target-language facet** only, the nodes whose effective language is the target (an empty `language` inherits the primary). State the facet in the report header. A page target is already one language. A page's translation twin in another language is not a duplicate; checking a translation against its source is the job of `wikilayer:translations`.
 2. `get_outline(<wiki-id>, max_depth=10)` once. Use `tokens` and `child_count` on each row as first-pass signals to budget per-page work, and the `language` field to keep to the facet.
 3. Spawn one general-purpose subagent per page. Each subagent reads its page's **exact** content through the wikilayer MCP (`get_outline(<page-id>, max_depth=10, include_markdown=true)`, sorting each node's children by `sort_key` for reader order), runs the per-block checks below, and returns a compact verdict: proof-of-work line per clean block, full finding with cited quote per violation. The page body never enters the caller context.
 
    Read the verbatim source, never a paraphrase: do **not** WebFetch the page or its `.md`. WebFetch routes the page through a model that can reword or reorder it, which is fatal for micro checks like em-dash use or wall-of-text, which only mean anything against the exact bytes. `get_outline` returns the raw stored markdown with no engine decoration to mistake for an antipattern.
-4. Caller runs the wiki-level graph checks (rule 7 below) using `get_outline(<wiki-id>, body_contains=<pattern>)` queries; no body content needed, the outline tells the story.
+4. **(Wiki target only.)** Caller runs the wiki-level graph checks (rule 7 below) using `get_outline(<wiki-id>, body_contains=<pattern>)` queries; no body content needed, the outline tells the story.
 5. Caller aggregates per-page verdicts + wiki-level findings into one markdown report, grouped by page (per-block) and by category (graph). Caller never writes back to the wiki.
 
 ## Per-block checks

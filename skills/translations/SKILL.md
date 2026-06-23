@@ -16,10 +16,12 @@ A source node is a **gap** when no node in its translation group carries the tar
 
 The caller never holds page bodies. Bodies live inside subagents; the caller sees compact reports.
 
-1. Resolve the target wiki and target language from `$ARGUMENTS` (for example "wiki 1 to en", or a URL plus a BCP 47 code). The wiki's `primary_language` is the source. If either is unclear, ask.
+1. Resolve the target and target language from `$ARGUMENTS` (for example "wiki 1 to en", or a URL plus a BCP 47 code). The wiki's `primary_language` is the source. If either is unclear, ask.
+
+   **Scope: whole wiki or one page.** The target may be a whole wiki or a single page (its subtree). A `wiki` target brings the whole wiki to parity; a `page` target fills gaps only within that page's subtree, for example a page just added or reworked that you want translated now. The source language and the structural map still come from the wiki, but step 4 only spawns over source pages inside the scope.
 2. Read the rules once, since the server gates writes: `search_nodes(wiki_id=<manual>, tag="before-write", include_body=true)` and `tag="before-read"`. The manual id is in the server instructions. Translations must follow the [writing style](https://wikilayer.org/smee-again/wikilayer-howto/2992-writing-style) and avoid the [anti-patterns](https://wikilayer.org/smee-again/wikilayer-howto/3038-anti-patterns), same as any other write.
 3. `get_outline(<wiki-id>, max_depth=10)` once. Each row carries `language` (omitted when empty). This is the structural map: source-language pages, existing target-language pages, and their nesting.
-4. Spawn one general-purpose subagent per source page (skip pages whose whole subtree is already linked, and pages tagged `i18n-exempt`). Each subagent:
+4. Spawn one general-purpose subagent per source page in scope (the whole wiki, or just the target page's subtree; skip pages whose whole subtree is already linked, and pages tagged `i18n-exempt`). Each subagent:
    - Reads the source page's **exact** content with `get_outline(<page-id>, max_depth=10, include_markdown=true)`, sorted by `sort_key`. Read the verbatim source, never WebFetch the `.md`, which a model can reword.
    - Calls `list_translations` on the page to find an existing target twin and reads it too, so it neither duplicates an existing translation nor silently overwrites one.
    - Translates only the **missing** nodes into the target language: neutral encyclopedic voice, links woven onto nouns, blockquotes preserved, cross-links (`page:N` / `block:N`) carried over verbatim, no em-dash. A translation mirrors the source node's title and body, it does not summarize or expand.
