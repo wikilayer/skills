@@ -19,7 +19,7 @@ The caller never reads page bodies. Bodies live inside subagents; the caller onl
 3. Spawn one general-purpose subagent per page. Each subagent reads its page's **exact** content through the wikilayer MCP (`get_outline(<page-id>, max_depth=10, include_markdown=true)`, sorting each node's children by `sort_key` for reader order), runs the per-block checks below, and returns a compact verdict: proof-of-work line per clean block, full finding with cited quote per violation. The page body never enters the caller context.
 
    Read the verbatim source, never a paraphrase: do **not** WebFetch the page or its `.md`. WebFetch routes the page through a model that can reword or reorder it, which is fatal for micro checks like em-dash use or wall-of-text, which only mean anything against the exact bytes. `get_outline` returns the raw stored markdown with no engine decoration to mistake for an antipattern.
-4. **(Wiki target only.)** Caller runs the wiki-level graph checks (rule 7 below) using `get_outline(<wiki-id>, body_contains=<pattern>)` queries; no body content needed, the outline tells the story.
+4. **(Wiki target only.)** Caller runs the wiki-level graph checks (rule 7 below) using `search_nodes(<wiki-id>, body_contains=<pattern>, language=<facet>)` queries; the hits alone tell the story.
 5. Caller aggregates per-page verdicts + wiki-level findings into one markdown report, grouped by page (per-block) and by category (graph). Caller never writes back to the wiki.
 
 ## Per-block checks
@@ -35,9 +35,9 @@ Each is a "smart prompt": the signal flags a candidate, the agent judges whether
 
 ## Wiki-level checks
 
-Run by the caller after per-page verdicts are collected. Mechanical graph queries against `get_outline`, no body content needed.
+Run by the caller after per-page verdicts are collected. Mechanical graph queries against `search_nodes`, no body content needed.
 
-7. **Orphan page.** For each page P with id N in the facet, call `get_outline(<wiki-id>, body_contains="(page:N)")` and keep only hits whose language is the facet's. If none remain (no facet block references `(page:N)`), P is reachable only via the auto-generated side nav, not from any narrative on another page. Flag, unless P is the facet home, which by definition has no incoming wiki links. A reference from another language facet does not weave P into this one, and P having a twin in another language does not count as being linked here. Common cause: a useful page that nobody wove into the narrative thread starting at the home.
+7. **Orphan page.** For each page P with id N in the facet, call `search_nodes(<wiki-id>, body_contains="(page:N)", language=<facet>)` (the server returns only this facet's hits; omit `language` on a monolingual wiki). If none come back (no facet block references `(page:N)`), P is reachable only via the auto-generated side nav, not from any narrative on another page. Flag, unless P is the facet home, which by definition has no incoming wiki links. A reference from another language facet does not weave P into this one, and P having a twin in another language does not count as being linked here. Common cause: a useful page that nobody wove into the narrative thread starting at the home.
 
 ## Severity
 
