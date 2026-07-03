@@ -1,0 +1,15 @@
+{
+  "name": "wikilayer",
+  "description": "Audit and translate any wikilayer wiki: lint, review, and cross-language translations.",
+  "owner": {
+    "name": "Maxim Oransky",
+    "email": "maxim.oransky@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "wikilayer",
+      "source": "./",
+      "description": "Audit and translate any wikilayer wiki: mechanical lint against the authoring manual, reader-perspective review for coherence, and a cross-language translations pass."
+    }
+  ]
+}
