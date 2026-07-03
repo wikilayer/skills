@@ -26,7 +26,7 @@ The caller never reads page bodies. Bodies live inside subagents; the caller onl
 
 Each is a "smart prompt": the signal flags a candidate, the agent judges whether it's a real issue in context.
 
-1. **Em-dash overuse.** While reading prose, watch for `—` clustering or replacing a comma that would clearly do. One per page is fine. Multiple per paragraph is not. Judge per occurrence.
+1. **Em-dash.** The em-dash (`—`) is a rare mark, earned, not default punctuation. Flag every occurrence and judge whether it is the seldom case where nothing else carries the meaning; almost always a comma, colon, period, or parentheses is the fix. Do not wave `—` through as "one per page is fine".
 2. **Wall block.** Signal from outline: `tokens` substantial AND `child_count == 0`. Read body. If it's two or more topical beats glued together, recommend decomposing into child blocks. If body contains `**Bold.**` paragraph-leading bolds, `---` horizontal rules, or `# ` markdown headers: those are pseudo-headings smuggled into one body. Recommend extracting them as real child blocks.
 3. **Opaque title.** Walk outline as a reader who only sees titles. If a title doesn't convey what the block/page is about ("Overview", "Contents", "Topic 1") or two siblings share a title with no differentiator, flag. The fix is rename, not delete; sometimes "Overview" is fine in context.
 4. **Invented navigation.** A block whose body is mostly a hand-curated list of links to other pages/blocks ("Contents", "See also", "Quick links", "Back to X"). The engine already generates per-page TOC and backlinks. Strip-links test: imagine the page printed on paper with no clickable links. If the block becomes garbage, it was navigation; recommend deletion. Apply the same test to individual prose links: `Click [here](...)` and `See [Foo](...), [Bar](...)` both fail without their links; an inline `[tenge](page:6564) was introduced in 1993` reads fine without the link.
@@ -42,5 +42,5 @@ Run by the caller after per-page verdicts are collected. Mechanical graph querie
 ## Severity
 
 - **Critical**: antipattern breaks the read or hides the page from readers (invented navigation, walls, orphan pages).
-- **Warning**: style violation that survives but degrades (em-dash overuse, opaque titles).
+- **Warning**: style violation that survives but degrades (em-dash, opaque titles).
 - **Info**: judgment calls worth a look (same-page links, escalation candidates).
