@@ -1,7 +1,7 @@
 {
   "name": "wikilayer",
   "description": "Audit and translate any wikilayer wiki: mechanical lint against the authoring manual, reader-perspective review for coherence, and a cross-language translations pass that fills missing translations.",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "author": {
     "name": "Maxim Oransky",
     "email": "maxim.oransky@gmail.com"
