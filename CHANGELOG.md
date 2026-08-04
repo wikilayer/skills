@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.6.0
+- review, translations: read each page with `get_page_markdown`, the same one-call document lint moved to in 0.5.0.
+- translations: a twin's `## Links here` section is not compared. Each language has its own inbound links, so a twin with a different list, or none, is not a structural divergence and never a reason to write.
+
 ## 0.5.0
 - lint: reads each page with `get_page_markdown`, one call returning the page as one document, instead of an outline carrying every body. Findings cite the node through the `<!-- block:N -->` comment the document puts over each one.
 - lint: **Orphan page** no longer costs a `search_nodes` call per page. The document closes with the pages that link to it, so an absent section is the answer. Needs wikilayer 0.60.0 or newer, where that section counts the wiki home among the sources and keeps to one language.
