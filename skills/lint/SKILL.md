@@ -1,5 +1,5 @@
 ---
-description: Lint a wikilayer wiki against the house style. Advisory only, reporting antipatterns with one-line recommendations, never editing. Pair with /wikilayer:review when the reader-perspective pass also matters. Use when the user asks to lint a wiki, run the style checks, or audit before publishing.
+description: Lint a wikilayer wiki, or one page in it, against the house style. Advisory only, reporting antipatterns with one-line recommendations, never editing. A page target is the focused pass right after editing that page; a wiki target is the full audit. Pair with /wikilayer:review when the reader-perspective pass also matters. Use when the user asks to lint a wiki or a single page, run the style checks, or audit before publishing.
 ---
 
 # wikilayer:lint

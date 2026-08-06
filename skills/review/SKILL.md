@@ -1,5 +1,5 @@
 ---
-description: "Reader-perspective review of a wikilayer wiki: does the whole hang together as one coherent body of work? Checks structural coherence across pages, contradictions, missed DRY, and reading rhythm. Macro-level only; the micro detail-hunt is left to /wikilayer:lint. Advisory only; never edits. Expensive, run before major releases or quarterly. Use when the user asks to review a wiki, audit it as a reader, or check it for coherence."
+description: "Reader-perspective review of a wikilayer wiki, or of one page in it: does the whole hang together as one coherent body of work? Checks structural coherence across pages, contradictions, missed DRY, and reading rhythm. Macro-level only; the micro detail-hunt is left to /wikilayer:lint. Advisory only; never edits. A wiki target is expensive, for major releases or a quarterly pass; a page target is cheap and is the usual read right after one page was added or reworked. Use when the user asks to review a wiki or a single page, audit it as a reader, or check it for coherence."
 ---
 
 # wikilayer:review

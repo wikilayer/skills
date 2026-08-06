@@ -1,5 +1,5 @@
 ---
-description: Bring a wikilayer wiki's translations into parity with a target language. Audits cross-language coverage (missing translations, structural divergence, stale or orphan nodes), then translates and links the genuine gaps, leaving anything tagged i18n-exempt alone. Unlike /wikilayer:lint and /wikilayer:review this skill writes to the wiki. Use when the user asks to translate a wiki, fill its missing translations, or check translation parity.
+description: Bring a wikilayer wiki, or one page in it, into translation parity with a target language. Audits cross-language coverage (missing translations, structural divergence, stale or orphan nodes), then translates and links the genuine gaps, leaving anything tagged i18n-exempt alone. A page target fills only that page's subtree, for a page just added or reworked. Unlike /wikilayer:lint and /wikilayer:review this skill writes to the wiki. Use when the user asks to translate a wiki or a single page, fill its missing translations, or check translation parity.
 ---
 
 # wikilayer:translations
