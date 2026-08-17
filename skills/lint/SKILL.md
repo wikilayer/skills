@@ -50,8 +50,16 @@ Each is a "smart prompt": the signal flags a candidate, the agent judges whether
 
     Distinct from rule 4, which targets curated links. This one targets prose that narrates the tree, with links or without, and the two are reported separately.
 
+12. **Page grown past one reading.** Every other check reads blocks; this one reads the page as an object and asks whether it is still one. Sum the subtree from `get_outline` and count its rows. A page whose body runs past roughly 2,000 tokens, or whose outline runs past roughly 25 rows, is a candidate: past that a reader scrolls rather than reads, and the per-page table of contents stops being a map and becomes a second document. Neither figure is a limit to enforce, and a data page of a hundred parallel rows is not the target; the target is a page carrying several subjects that each stand alone.
+
+    The test is whether a section could be opened cold. If a reader arriving at one section needs nothing from its siblings, it is a page wearing a heading, and the fix is to promote it. If the sections only make sense in sequence, the page is long but whole, and the fix is to cut it instead.
+
+    Report the weight of each top-level section beside the page total, because the imbalance is the sharper signal: one section several times heavier than its siblings usually means it is a subject of its own, or that a neighbour is starved and its material has drifted into it. Say which of the two you are looking at.
+
+    Note the cost before recommending the split. Pages parent under the wiki and nowhere else, so promoting four sections adds four rows to the wiki root, and a root already running to dozens of children trades a long page for a long index. Where that trade is bad, say so and recommend cutting or merging instead.
+
 ## Severity
 
 - **Critical**: antipattern breaks the read or hides the page from readers (invented navigation, walls, orphan pages, tombstone blocks). A narrated count the tree already contradicts belongs here too: it is a visible factual error, not a stylistic one.
-- **Warning**: style violation that survives but degrades (em-dash, opaque titles, editorial date stamps, blocks thinner than their titles, an outline narrated in prose while it still happens to be accurate).
+- **Warning**: style violation that survives but degrades (em-dash, opaque titles, editorial date stamps, blocks thinner than their titles, an outline narrated in prose while it still happens to be accurate, a page grown past one reading).
 - **Info**: judgment calls worth a look (same-page links, escalation candidates).
