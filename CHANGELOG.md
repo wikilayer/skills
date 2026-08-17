@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.7.0
+- lint: add **Outline narrated in prose** — a body that lists the sections under it, or counts them, duplicates what the engine already renders and drifts the moment a child is added or renamed. The check turns on where the sentence gets its truth from: the tree of this page, or the subject. A count the tree already contradicts is Critical rather than Warning, since the reader can see it is wrong.
+
 ## 0.6.0
 - review, translations: read each page with `get_page_markdown`, the same one-call document lint moved to in 0.5.0.
 - translations: a twin's `## Links here` section is not compared. Each language has its own inbound links, so a twin with a different list, or none, is not a structural divergence and never a reason to write.

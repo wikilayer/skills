@@ -44,8 +44,14 @@ Each is a "smart prompt": the signal flags a candidate, the agent judges whether
 
 10. **Orphan page.** The document ends without a `## Links here` section, meaning nothing in this facet points at the page: it is reachable only through the auto-generated side nav, not from any narrative. Flag, unless it is the facet home, which by definition has nothing above it. The section already answers this: the engine keeps a link table, scopes it to the page's own language, and counts the home among the sources, so a page the home introduces is not an orphan and says so. Common cause: a useful page nobody wove into the thread that starts at the home.
 
+11. **Outline narrated in prose.** A body that describes the page's own structure instead of its subject: a list of the sections that follow ("Below: linking, structure, content"), an intro announcing "here you'll find pages on X, Y, Z", or a count of what the node holds ("four page types", "seven languages carry it") when those items are the blocks beneath it. The engine already renders the headings, the side nav and the per-page table of contents, so the sentence earns nothing and goes stale as soon as a child is added, renamed or moved. The count is the sharpest form: nobody edits a sentence to fix arithmetic, so a drifted number is the ordinary state rather than the exception.
+
+    The test is where the sentence gets its truth from. If it comes from the tree of this page, flag it: the reader already sees that tree, and the tree changes without asking the sentence. If it comes from the subject, the platform, the product or the rule itself, it stays, even where today its number happens to match the tree. "The three laws of robotics" stays and so does "names are capped at 30 characters"; "six common mistakes" goes, and so does a lead counting the children below it. The fix is to cut the sentence, or to replace it with something the outline cannot show, such as what a notation in the children means.
+
+    Distinct from rule 4, which targets curated links. This one targets prose that narrates the tree, with links or without, and the two are reported separately.
+
 ## Severity
 
-- **Critical**: antipattern breaks the read or hides the page from readers (invented navigation, walls, orphan pages, tombstone blocks).
-- **Warning**: style violation that survives but degrades (em-dash, opaque titles, editorial date stamps, blocks thinner than their titles).
+- **Critical**: antipattern breaks the read or hides the page from readers (invented navigation, walls, orphan pages, tombstone blocks). A narrated count the tree already contradicts belongs here too: it is a visible factual error, not a stylistic one.
+- **Warning**: style violation that survives but degrades (em-dash, opaque titles, editorial date stamps, blocks thinner than their titles, an outline narrated in prose while it still happens to be accurate).
 - **Info**: judgment calls worth a look (same-page links, escalation candidates).
