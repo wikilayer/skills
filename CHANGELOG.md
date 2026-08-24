@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.9.0
+- lint, review: a framing title over a framing body is no longer a finding. Titles exist so that reading the outline alone is a map of what the wiki holds, and "Intro" over the paragraph saying what a page is and who it is for is a true entry on that map. What both checks flag now is the gap between promise and content: one statable idea under a heading that promises nothing, so the claim never reaches the map.
+
 ## 0.8.0
 - lint: add **Page grown past one reading** — the first check that judges the page rather than its blocks. Sums the subtree and counts the outline, reports the weight of each top-level section so an imbalance shows, and tests whether a section could be opened cold. Names the cost of the fix too: pages parent under the wiki and nowhere else, so promoting sections lengthens the root index.
 
