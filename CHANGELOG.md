@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.10.0
+- lint, review: judge a title by its level. An h2 names a section and is set almost as large as the page title, so a claim written there competes with it; a claim belongs at h3 or deeper, where the heading states it and the body argues it. Both skills now flag a sentence-shaped h2, and flag a page whose entire top level is sentences as what it is: a page written in one pass with no sections. Neither ever recommends moving a block to another level to fit its title.
+
 ## 0.9.0
 - lint, review: a framing title over a framing body is no longer a finding. Titles exist so that reading the outline alone is a map of what the wiki holds, and "Intro" over the paragraph saying what a page is and who it is for is a true entry on that map. What both checks flag now is the gap between promise and content: one statable idea under a heading that promises nothing, so the claim never reaches the map.
 

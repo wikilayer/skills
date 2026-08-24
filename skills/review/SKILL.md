@@ -30,7 +30,7 @@ Per-page (subagent judges):
 
 1. **Headings as a coherent table of contents.** Read block titles of the page in order, as if they were a chapter list. Do they together tell a connected story? Pure outline-level read, not body-deep. Adequate titles are the primary structure on this wiki; if the chapter list reads as a story, no opening hook is needed.
 
-   A page usually opens on its frame — what this page is, who it is for — and a framing title over that block ("Intro", "Basics") is part of a good chapter list, not a hole in it. The hole is a title that promises nothing over a body that states something: the outline is the map, and a block whose claim never reaches the map is only found by opening it.
+   Read the h2 titles as the chapter list they are: each names a section of the page, in a few words, and a page opening on its frame ("Intro", "Who this page is for") is a normal first chapter. Two shapes break the list. A top level written as sentences reads as a stack of claims rather than a table of contents, and a page whose whole top level is sentences was made in one pass with no sections at all: say which sections its blocks fall into. Deeper down the opposite is the fault — a heading that promises nothing over a body that states something, so the claim never reaches the outline and the block is found only by opening it.
 2. **Reading rhythm within each block.** Subagent reads each block as prose, not as a checklist. Even when the block isn't mechanically a wall (lint catches that), does it lose the thread mid-way? Topic jumps, missing connective tissue, paragraphs that don't continue the previous one, flag.
 
 Wiki-level (caller synthesizes):
