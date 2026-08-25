@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.11.0
+- lint: there is no side navigation, and two checks reasoned from one. **Outline narrated in prose** told an author that a panel already showed the pages their sentence named, and **Orphan page** called an unlinked page merely undiscoverable in the narrative. A page renders breadcrumbs that climb to the wiki and a contents rail holding its own blocks, nothing more, so a link in a body is the only path to a child page and an unlinked page has no way in at all.
+- lint: **Invented navigation** no longer recommends deleting a page's only inbound link. A body whose links are what carry a reader into the wiki's pages is judged on whether it orients the reader, not by the strip-links test.
+
 ## 0.10.0
 - lint, review: judge a title by its level. An h2 names a section and is set almost as large as the page title, so a claim written there competes with it; a claim belongs at h3 or deeper, where the heading states it and the body argues it. Both skills now flag a sentence-shaped h2, and flag a page whose entire top level is sentences as what it is: a page written in one pass with no sections. Neither ever recommends moving a block to another level to fit its title.
 
