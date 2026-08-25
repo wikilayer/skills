@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.0
+- review: the wiki-level pass had nothing to run on. Subagents returned findings and proof-of-work, never the claims their page makes, so once the pages were read in parallel nobody held the claims of two pages at once and cross-page contradictions could not be found — only skipped or invented. Each per-page verdict now carries a digest as well: every substantive claim with its block id and the number, date, name or rule it asserts, plus the subjects the page treats at length. The caller collates the digests and re-reads the two blocks a contradiction names before reporting it, because a summary can manufacture both an agreement and a conflict.
+- review: say that the fan-out is mechanics rather than a division of the task, and that the deliverable is one review of the whole body. A wiki target that skips the synthesis is a stack of page reviews, which is what the target was chosen not to be.
+
 ## 0.11.0
 - lint: there is no side navigation, and two checks reasoned from one. **Outline narrated in prose** told an author that a panel already showed the pages their sentence named, and **Orphan page** called an unlinked page merely undiscoverable in the narrative. A page renders breadcrumbs that climb to the wiki and a contents rail holding its own blocks, nothing more, so a link in a body is the only path to a child page and an unlinked page has no way in at all.
 - lint: **Invented navigation** no longer recommends deleting a page's only inbound link. A body whose links are what carry a reader into the wiki's pages is judged on whether it orients the reader, not by the strip-links test.

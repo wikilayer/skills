@@ -16,12 +16,18 @@ Advisory reader-perspective audit. Where lint hunts micro antipatterns, review c
 
    A language twin is the same topic in another language, never a finding. A page and its translation are not a contradiction, not missed DRY, not a duplicate. Checking a translation against its source is the job of `wikilayer:translations`, not this skill, so nodes outside the target facet stay out of scope for this run.
 2. `get_outline(<wiki-id>, max_depth=10)` once. Use it as the structural map of the facet; on a multilingual wiki the facet home is the target language's home (the wiki root for the primary language, the root's translation twin for another).
-3. Spawn one general-purpose subagent per page. Each subagent reads the page's **exact** content with `get_page_markdown(<page-id>, limit=100, offset=0)`, paging with `offset` while `has_more` is true, in reading order already. It runs the per-page categories below and returns a compact verdict: a proof-of-work line per clean block, full evidence (cited quote + block URL) per finding.
+3. Spawn one general-purpose subagent per page. Each subagent reads the page's **exact** content with `get_page_markdown(<page-id>, limit=100, offset=0)`, paging with `offset` while `has_more` is true, in reading order already. It runs the per-page categories below and returns a verdict in two parts.
+
+   The first part is the findings: a proof-of-work line per clean block, full evidence (cited quote + block URL) per finding. The second is a digest of the page, and it is what the wiki-level pass runs on: every substantive claim the page states, one line each, carrying its block id and the number, date, name or rule it asserts, followed by the subjects the page treats at length. Without the digest step 4 has nothing to collate. A contradiction between two pages lives in what each of them claims, and once the pages have been read in parallel nobody holds the claims of both.
+
+   The fan-out is mechanics, not a division of the task. A whole wiki does not fit one context and an exact-text audit cannot run on a summary, so the pages are read at once and only their digests come back. Say this when reporting: the deliverable is one review of the whole body, and the per-page reads are how it was produced.
 
    Read the verbatim source, never a paraphrase: do **not** WebFetch the page or its `.md` URL. WebFetch routes the page through a model that can silently reword or reorder content, which corrupts an exact-text audit (a block list was observed reordered this way). The tool returns the stored markdown untouched.
 
    Two things in that document are the engine's, not the author's: the `<!-- block:N -->` comment above each node, which is how a finding cites the node it belongs to, and the closing `## Links here` section after a `---` rule. Neither is ever a finding, and the rule before the section is not a heading smuggled into a body. Whether anything points at the page at all is `wikilayer:lint`'s call, not this skill's.
-4. **(Wiki target only.)** Synthesize the wiki-level pass once subagent verdicts are in: cross-page contradictions, missed DRY, and structural grouping, all within the target facet. The caller does this; it is the only step that needs every page's verdict at once.
+4. **(Wiki target only.)** Synthesize the wiki-level pass from the digests once every subagent has reported: cross-page contradictions, missed DRY, and structural grouping, all within the target facet. The caller does this; it is the only step that holds every page at once, and it is what a wiki target is bought for. Skip it and the run is a stack of page reviews, which is what the target was chosen not to be.
+
+   Before reporting a contradiction, re-read the two blocks it names with `get_page_markdown`. A digest is a summary, and a summary can manufacture both an agreement and a conflict that the text does not hold.
 5. Emit one markdown report grouped by category. Caller never writes back to the wiki.
 
 ## Categories
