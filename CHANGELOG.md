@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.12.2
+- lint: the page-size check priced a split in rows added to a wiki root index, and there is no such index: the page chrome carries breadcrumbs, backlinks and the current page's own contents, and nothing that lists pages. The cost of promoting a section is that nobody meets it by scrolling its old parent any more, and it lives only through a link somebody writes. Two other checks already said the chrome lists nothing; this one disagreed with them.
+
 ## 0.12.1
 - lint: stop prescribing a number of sections. The check told an author to name three to five of them, which is a limit the authoring guide never meant to set: a page has as many sections as its subject has parts, and the requirement is that each name is short and thematic rather than a claim. Mirrors the guide's own wording, which lost the count too.
 

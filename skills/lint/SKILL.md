@@ -64,7 +64,7 @@ Each is a "smart prompt": the signal flags a candidate, the agent judges whether
 
     Report the weight of each top-level section beside the page total, because the imbalance is the sharper signal: one section several times heavier than its siblings usually means it is a subject of its own, or that a neighbour is starved and its material has drifted into it. Say which of the two you are looking at.
 
-    Note the cost before recommending the split. Pages parent under the wiki and nowhere else, so promoting four sections adds four rows to the wiki root, and a root already running to dozens of children trades a long page for a long index. Where that trade is bad, say so and recommend cutting or merging instead.
+    Note the cost before recommending the split. Nothing in the page chrome lists a page, so a section promoted out of its parent stops being met by a reader scrolling that parent and becomes reachable only through a link somebody writes into it. Say where that link belongs, or recommend cutting or merging instead.
 
 ## Severity
 
