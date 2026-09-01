@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.12.1
+- lint: stop prescribing a number of sections. The check told an author to name three to five of them, which is a limit the authoring guide never meant to set: a page has as many sections as its subject has parts, and the requirement is that each name is short and thematic rather than a claim. Mirrors the guide's own wording, which lost the count too.
+
 ## 0.12.0
 - review: the wiki-level pass had nothing to run on. Subagents returned findings and proof-of-work, never the claims their page makes, so once the pages were read in parallel nobody held the claims of two pages at once and cross-page contradictions could not be found — only skipped or invented. Each per-page verdict now carries a digest as well: every substantive claim with its block id and the number, date, name or rule it asserts, plus the subjects the page treats at length. The caller collates the digests and re-reads the two blocks a contradiction names before reporting it, because a summary can manufacture both an agreement and a conflict.
 - review: say that the fan-out is mechanics rather than a division of the task, and that the deliverable is one review of the whole body. A wiki target that skips the synthesis is a stack of page reviews, which is what the target was chosen not to be.
