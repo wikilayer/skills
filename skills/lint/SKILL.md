@@ -67,8 +67,10 @@ Each is a "smart prompt": the signal flags a candidate, the agent judges whether
 
     Note the cost before recommending the split. Nothing in the page chrome lists a page, so a section promoted out of its parent stops being met by a reader scrolling that parent and becomes reachable only through a link somebody writes into it. Say where that link belongs, or recommend cutting or merging instead.
 
+13. **List that outgrew the name above it.** Signal: a block whose body is a list of ten or more short parallel items, where the later items fall outside what the title names. The count is the signal, not the length of an item: rule 2 fires on prose glued together and the oversized-bullets half of rule 2 on one item swelling into an essay, while this one fires with every item still a single line. Recommend cutting the list where the subject changes and naming each part, so the outline gains a row rather than the body gaining a line. A list grows only because the subject under it grew, so the repair is to branch the tree; never recommend widening the title until it covers everything, which empties it into rule 3.
+
 ## Severity
 
 - **Critical**: antipattern breaks the read or hides the page from readers (invented navigation, walls, orphan pages, tombstone blocks). A narrated count the tree already contradicts belongs here too: it is a visible factual error, not a stylistic one.
-- **Warning**: style violation that survives but degrades (em-dash, opaque titles, editorial date stamps, blocks thinner than their titles, an outline narrated in prose while it still happens to be accurate, a page grown past one reading).
+- **Warning**: style violation that survives but degrades (em-dash, opaque titles, editorial date stamps, blocks thinner than their titles, an outline narrated in prose while it still happens to be accurate, a page grown past one reading, a list that outgrew its title).
 - **Info**: judgment calls worth a look (same-page links, escalation candidates).

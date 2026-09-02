@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.14.0
+- lint: add **List that outgrew the name above it**. A block whose list has reached a dozen short links had no check against it: the wall and oversized-bullet checks both measure how long an item runs, and every item here is one line. What breaks is the outline, where one row now stands for two subjects and the items that arrived last are the ones nobody looks for under that name. Mirrors the guide's new anti-pattern.
+
 ## 0.13.0
 - package the existing lint, review, and translations workflows as a Codex plugin without forking their instructions
 - make skill invocation and target resolution portable between Claude Code and Codex
