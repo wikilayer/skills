@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.13.0
+- package the existing lint, review, and translations workflows as a Codex plugin without forking their instructions
+- make skill invocation and target resolution portable between Claude Code and Codex
+- follow the current Wikilayer MCP rules handshake and paged outline contract
+- publish `info@wikilayer.org` as the plugin contact
+
 ## 0.12.2
 - lint: the page-size check priced a split in rows added to a wiki root index, and there is no such index: the page chrome carries breadcrumbs, backlinks and the current page's own contents, and nothing that lists pages. The cost of promoting a section is that nobody meets it by scrolling its old parent any more, and it lives only through a link somebody writes. Two other checks already said the chrome lists nothing; this one disagreed with them.
 
