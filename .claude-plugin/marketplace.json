@@ -3,7 +3,7 @@
   "description": "Audit and translate any wikilayer wiki, or a single page in it: lint, review, and cross-language translations.",
   "owner": {
     "name": "Maxim Oransky",
-    "email": "maxim.oransky@gmail.com"
+    "email": "info@wikilayer.org"
   },
   "plugins": [
     {

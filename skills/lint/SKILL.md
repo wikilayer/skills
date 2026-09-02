@@ -1,5 +1,6 @@
 ---
-description: Lint a wikilayer wiki, or one page in it, against the house style. Advisory only, reporting antipatterns with one-line recommendations, never editing. A page target is the focused pass right after editing that page; a wiki target is the full audit. Pair with /wikilayer:review when the reader-perspective pass also matters. Use when the user asks to lint a wiki or a single page, run the style checks, or audit before publishing.
+name: lint
+description: Lint a wikilayer wiki, or one page in it, against the house style. Advisory only, reporting antipatterns with one-line recommendations, never editing. A page target is the focused pass right after editing that page; a wiki target is the full audit. Pair with the wikilayer review skill when the reader-perspective pass also matters. Use when the user asks to lint a wiki or a single page, run the style checks, or audit before publishing.
 ---
 
 # wikilayer:lint
@@ -12,13 +13,13 @@ The checks below mirror the house-style anti-patterns at https://wikilayer.org/s
 
 The caller never reads page bodies. Bodies live inside subagents; the caller only sees compact verdicts.
 
-1. Resolve the target from `$ARGUMENTS` (numeric id or URL). If empty, ask.
+1. Resolve the target from the user's request (numeric id, URL, or unambiguous wiki/page name). If it is missing or ambiguous, ask.
 
    **Scope: whole wiki or one page.** The target may be a whole wiki or a single page (its subtree). Read its `kind` with `get_outline` or `get_node`. A `wiki` target lints every page in the facet; a `page` target lints that one. Every check runs per page either way. Use a page target for a focused pass after editing one page; a wiki target for a full audit.
 
-   **Pick the language facet.** `get_outline` rows carry a `language` field. If the wiki is monolingual, the whole wiki is the facet and the rest runs unchanged. If it is multilingual, lint one language at a time: take the target language from `$ARGUMENTS` (for example `wiki 1 in en`), otherwise default to the wiki's primary language. Every check below runs on the **target-language facet** only, the nodes whose effective language is the target (an empty `language` inherits the primary). State the facet in the report header. A page target is already one language. A page's translation twin in another language is not a duplicate; checking a translation against its source is the job of `wikilayer:translations`.
-2. `get_outline(<wiki-id>, max_depth=10)` once. Use `tokens` and `child_count` on each row as first-pass signals to budget per-page work, and the `language` field to keep to the facet.
-3. Spawn one general-purpose subagent per page. Each subagent reads its page's **exact** content with `get_page_markdown(<page-id>, limit=100, offset=0)`, paging with `offset` while `has_more` is true, runs the checks below, and returns a compact verdict: proof-of-work line per clean node, full finding with cited quote per violation. The page body never enters the caller context.
+   **Pick the language facet.** `get_outline` rows carry a `language` field. If the wiki is monolingual, the whole wiki is the facet and the rest runs unchanged. If it is multilingual, lint one language at a time: take the target language from the user's request (for example `wiki 1 in en`), otherwise default to the wiki's primary language. Every check below runs on the **target-language facet** only, the nodes whose effective language is the target (an empty `language` inherits the primary). State the facet in the report header. A page target is already one language. A page's translation twin in another language is not a duplicate; checking a translation against its source is the job of `wikilayer:translations`.
+2. Read and accept any rules the Wikilayer server requires before protected reads, then carry the returned agreement token on every call it binds. Read the complete outline with `get_outline(<wiki-id>, max_depth=10)`, supplying the pagination arguments exposed by the client and continuing until `has_more` is false. Use `tokens` and `child_count` on each row as first-pass signals to budget per-page work, and the `language` field to keep to the facet. Tool names may be namespaced by the client; use the exposed Wikilayer tool whose final name matches the operation named here.
+3. Spawn one general-purpose subagent per page. Each subagent reads its page's **exact** content with `get_page_markdown(<page-id>)`, runs the checks below, and returns a compact verdict: proof-of-work line per clean node, full finding with cited quote per violation. The page body never enters the caller context.
 
    Read the verbatim source, never a paraphrase: do **not** WebFetch the page or its `.md` URL. WebFetch routes the page through a model that can reword or reorder it, which is fatal for micro checks like em-dash use or wall-of-text, which only mean anything against the exact bytes. The tool returns the stored markdown untouched.
 
