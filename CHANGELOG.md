@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.16.0
+- review: the skill said it reads for the house writing style and then carried no pointer to it, while lint has named its own source page since the start. The two now mirror the guide the same way, each from the page that belongs to it: the anti-patterns for lint, the writing style for review, both duplicated here so the skills run without the guide present.
+- lint: drop the note about rules that belong to review. Now that a rule's page says which skill mirrors it, the note said the same thing a second time and would go stale on its own.
+
 ## 0.15.0
 - review: nothing read the text for what it spends. A block could carry twice the words its claim needs and pass every category, and a long block gets skimmed, so the cost lands on every reader of it rather than once on its author. Review now writes the shorter version and quotes what goes: a verdict with no rewritten text is not a finding, a cut counts only when the shorter version is visibly shorter and still says everything the original said, and a block already as short as its claim allows earns a proof-of-work line, because this is the check most prone to inventing work. Mirrors the guide's new anti-pattern.
 - review, lint: the two skills split by grain, "macro-level only" against "micro antipatterns", which left the wording of a block out of reach of both. Lint's checks are structural, and review disclaimed the sentence. They now split by kind: lint runs the fixed antipattern checklist over the tree, review is the editor's read, and lint's mirroring paragraph names the rule it cannot mirror.

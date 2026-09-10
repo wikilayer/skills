@@ -7,7 +7,7 @@ description: Lint a wikilayer wiki, or one page in it, against the house style. 
 
 Advisory style audit. Read each block, apply the check list, emit a markdown report grouped by page. Do not apply fixes.
 
-The checks below mirror the house-style anti-patterns at https://wikilayer.org/smee-again/wikilayer-howto/3038-anti-patterns, the primary source. They are duplicated here on purpose: the skill must run self-contained against any wikilayer instance, including a localhost one with no authoring guide present, so it never fetches rules at lint time. When that page gains or changes a rule, mirror it here. A rule that can only be checked by reading the text as an editor, such as what a block would say in fewer words, is the review skill's instead.
+The checks below mirror the house-style anti-patterns at https://wikilayer.org/smee-again/wikilayer-howto/3038-anti-patterns, the primary source. They are duplicated here on purpose: the skill must run self-contained against any wikilayer instance, including a localhost one with no authoring guide present, so it never fetches rules at lint time. When that page gains or changes a rule, mirror it here.
 
 ## Procedure
 

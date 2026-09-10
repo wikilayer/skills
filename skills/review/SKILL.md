@@ -7,6 +7,8 @@ description: "Reader-perspective review of a wikilayer wiki, or of one page in i
 
 Advisory reader-perspective audit. Where lint runs a fixed antipattern checklist over the tree, review is the editor: it reads the text itself and checks that the whole is coherent, consistent, non-contradictory, and no longer than it needs to be. Recommendations only. Do not edit.
 
+The categories below mirror the house writing style at https://wikilayer.org/smee-again/wikilayer-howto/2992-writing-style, the primary source, duplicated here so the skill runs self-contained against any wikilayer instance, including one with no authoring guide present. When that page gains or changes a rule, mirror it here.
+
 ## Procedure
 
 1. Resolve the target from the user's request (numeric id, URL, or unambiguous wiki/page name). If it is missing or ambiguous, ask.
