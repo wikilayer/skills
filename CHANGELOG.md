@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.15.0
+- review: nothing read the text for what it spends. A block could carry twice the words its claim needs and pass every category, and a long block gets skimmed, so the cost lands on every reader of it rather than once on its author. Review now writes the shorter version and quotes what goes: a verdict with no rewritten text is not a finding, a cut counts only when the shorter version is visibly shorter and still says everything the original said, and a block already as short as its claim allows earns a proof-of-work line, because this is the check most prone to inventing work. Mirrors the guide's new anti-pattern.
+- review, lint: the two skills split by grain, "macro-level only" against "micro antipatterns", which left the wording of a block out of reach of both. Lint's checks are structural, and review disclaimed the sentence. They now split by kind: lint runs the fixed antipattern checklist over the tree, review is the editor's read, and lint's mirroring paragraph names the rule it cannot mirror.
+- lint, review: the rules agreement signature never reached the subagents. The caller accepted the server's rules and then handed every protected read to a fan-out with no signature to carry, so each page read was refused on its first call.
+
 ## 0.14.0
 - lint: add **List that outgrew the name above it**. A block whose list has reached a dozen short links had no check against it: the wall and oversized-bullet checks both measure how long an item runs, and every item here is one line. What breaks is the outline, where one row now stands for two subjects and the items that arrived last are the ones nobody looks for under that name. Mirrors the guide's new anti-pattern.
 
