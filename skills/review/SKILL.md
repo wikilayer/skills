@@ -1,13 +1,15 @@
 ---
 name: review
-description: "Reader-perspective review of a wikilayer wiki, or of one page in it: does the whole hang together as one coherent body of work? Checks structural coherence across pages, contradictions, missed DRY, reading rhythm, and what the text would say in fewer words. This is the editor's read, wording included; the mechanical pass over the house antipattern list is the wikilayer lint skill. Advisory only; never edits. A wiki target is expensive, for major releases or a quarterly pass; a page target is cheap and is the usual read right after one page was added or reworked. Use when the user asks to review a wiki or a single page, audit it as a reader, check it for coherence, or ask what it would say in fewer words."
+description: "Reader-perspective review of a wikilayer wiki, or of one page in it: what does it assert, is any of it false, and does the arrangement say what the author meant it to say? Checks where each node sits, what a title promises against what its body holds, bodies restating what the engine already keeps, page size and reachability, contradictions across pages, and a claim carried in two places at once. Everything here can become false, which is what separates it from the wikilayer lint skill, whose findings never can and which reads the text instead. Advisory only; never edits. A wiki target is expensive, for major releases or a quarterly pass; a page target is cheap and is the usual read right after one page was added or reworked. Use when the user asks to review a wiki or a single page, audit it as a reader, or check it for coherence."
 ---
 
 # wikilayer:review
 
-Advisory reader-perspective audit. Where lint runs a fixed antipattern checklist over the tree, review is the editor: it reads the text itself and checks that the whole is coherent, consistent, non-contradictory, and no longer than it needs to be. Recommendations only. Do not edit.
+Advisory audit of what the wiki asserts. The arrangement of nodes is itself a claim: where a node sits says that these are of one kind, that this follows from that, that this is the exception. Recommendations only. Do not edit.
 
-The categories below mirror the house writing style at https://wikilayer.org/smee-again/wikilayer-howto/2992-writing-style, the primary source, duplicated here so the skill runs self-contained against any wikilayer instance, including one with no authoring guide present. When that page gains or changes a rule, mirror it here.
+This skill reads the tree and the claims; lint reads the text. Everything found here can become false, which is why a finding here earns a second reading of the page and a lint finding never does. Keep the two reports apart: merged into one list the cheap findings crowd out the expensive ones, and the cheap ones get done first because they are cheap. A block that has lost its thread or spends more words than its claim needs is lint's, not this skill's.
+
+The categories below mirror https://wikilayer.org/smee-again/wikilayer-howto/54721-what-a-node-holds and the principles they come from at https://wikilayer.org/smee-again/wikilayer-howto/54712-principles, duplicated here so the skill runs self-contained against any wikilayer instance, including one with no authoring guide present. When either page gains or changes a rule, mirror it here.
 
 ## Procedure
 
@@ -18,47 +20,77 @@ The categories below mirror the house writing style at https://wikilayer.org/sme
    **Pick the language facet.** `get_outline` rows carry a `language` field; collect the distinct languages present. If the wiki is monolingual, the whole wiki is the facet and the rest of this procedure runs unchanged. If it is multilingual, this skill audits one language at a time: take the target language from the user's request (for example `wiki 1 in en`), otherwise default to the wiki's primary language (the root's language). Every step below operates on the **target-language facet** only, the nodes whose effective language is the target (an empty `language` inherits the primary). State the facet in the report header. A page target is already one language, so it needs no facet choice.
 
    A language twin is the same topic in another language, never a finding. A page and its translation are not a contradiction, not missed DRY, not a duplicate. Checking a translation against its source is the job of `wikilayer:translations`, not this skill, so nodes outside the target facet stay out of scope for this run.
-2. Read and accept any rules the Wikilayer server requires before protected reads, then carry the returned agreement token on every call it binds. Read the complete outline with `get_outline(<wiki-id>, max_depth=10)`, supplying the pagination arguments exposed by the client and continuing until `has_more` is false. Use it as the structural map of the facet; on a multilingual wiki the facet home is the target language's home (the wiki root for the primary language, the root's translation twin for another). Tool names may be namespaced by the client; use the exposed Wikilayer tool whose final name matches the operation named here.
+2. Read and accept any rules the Wikilayer server requires before protected reads, then carry the returned agreement token on every call it binds. Read the complete outline with `get_outline(<wiki-id>, max_depth=10)`, supplying the pagination arguments exposed by the client and continuing until `has_more` is false. Use it as the structural map of the facet, and keep the `tokens` and `child_count` of each row: category 7 is judged from them and from nothing else. On a multilingual wiki the facet home is the target language's home (the wiki root for the primary language, the root's translation twin for another). Tool names may be namespaced by the client; use the exposed Wikilayer tool whose final name matches the operation named here.
 3. Spawn one general-purpose subagent per page, passing each the agreement signature from step 2 and requiring it on every call that binds it. Each subagent reads the page's **exact** content with `get_page_markdown(<page-id>)`, in reading order already. It runs the per-page categories below and returns a verdict in two parts.
 
-   The first part is the findings: a proof-of-work line per clean block, full evidence (cited quote + block URL, plus the shorter version where the finding is a cut) per finding. The second is a digest of the page, and it is what the wiki-level pass runs on: every substantive claim the page states, one line each, carrying its block id and the number, date, name or rule it asserts, followed by the subjects the page treats at length. Without the digest step 4 has nothing to collate. A contradiction between two pages lives in what each of them claims, and once the pages have been read in parallel nobody holds the claims of both.
+   The first part is the findings: a proof-of-work line per clean block, and per finding a cited quote, the block URL, and what goes wrong if it is not applied. The second is a digest of the page, and it is what the wiki-level pass runs on: every substantive claim the page states, one line each, carrying its block id and the number, date, name or rule it asserts, followed by the subjects the page treats at length. Without the digest step 4 has nothing to collate. A contradiction between two pages lives in what each of them claims, and once the pages have been read in parallel nobody holds the claims of both.
 
    The fan-out is mechanics, not a division of the task. A whole wiki does not fit one context and an exact-text audit cannot run on a summary, so the pages are read at once and only their digests come back. Say this when reporting: the deliverable is one review of the whole body, and the per-page reads are how it was produced.
 
    Read the verbatim source, never a paraphrase: do **not** WebFetch the page or its `.md` URL. WebFetch routes the page through a model that can silently reword or reorder content, which corrupts an exact-text audit (a block list was observed reordered this way). The tool returns the stored markdown untouched.
 
-   Two things in that document are the engine's, not the author's: the `<!-- block:N -->` comment above each node, which is how a finding cites the node it belongs to, and the closing `## Links here` section after a `---` rule. Neither is ever a finding, and the rule before the section is not a heading smuggled into a body. Whether anything points at the page at all is the wikilayer lint skill's call, not this skill's.
+   Two things in that document are the engine's, not the author's: the `<!-- block:N -->` comment above each node, which is how a finding cites the node it belongs to, and the closing `## Links here` section after a `---` rule. Neither is ever a finding, and the rule before the section is not a heading smuggled into a body. Its absence is the evidence category 7 reads: a page whose document ends without one is a page nothing points at.
 4. **(Wiki target only.)** Synthesize the wiki-level pass from the digests once every subagent has reported: cross-page contradictions, missed DRY, and structural grouping, all within the target facet. The caller does this; it is the only step that holds every page at once, and it is what a wiki target is bought for. Skip it and the run is a stack of page reviews, which is what the target was chosen not to be.
 
    Before reporting a contradiction, re-read the two blocks it names with `get_page_markdown`. A digest is a summary, and a summary can manufacture both an agreement and a conflict that the text does not hold.
-5. Emit one markdown report grouped by category. Caller never writes back to the wiki.
+5. Emit one markdown report, its findings ordered as the closing section says rather than grouped by the category that produced them. Caller never writes back to the wiki.
 
 ## Categories
 
-Per-page (subagent judges):
+Per-page (a subagent judges these from the page text):
 
-1. **Headings as a coherent table of contents.** Read block titles of the page in order, as if they were a chapter list. Do they together tell a connected story? Pure outline-level read, not body-deep. Adequate titles are the primary structure on this wiki; if the chapter list reads as a story, no opening hook is needed.
+1. **The arrangement.** Where each node sits, and whether its title and its body agree.
 
-   Read the h2 titles as the chapter list they are: each names a section of the page, in a few words, and a page opening on its frame ("Intro", "Who this page is for") is a normal first chapter. Two shapes break the list. A top level written as sentences reads as a stack of claims rather than a table of contents, and a page whose whole top level is sentences was made in one pass with no sections at all: say which sections its blocks fall into. Deeper down the opposite is the fault — a heading that promises nothing over a body that states something, so the claim never reaches the outline and the block is found only by opening it.
-2. **Reading rhythm within each block.** Subagent reads each block as prose, not as a checklist. Even when the block isn't mechanically a wall (lint catches that), does it lose the thread mid-way? Topic jumps, missing connective tissue, paragraphs that don't continue the previous one, flag.
-3. **Text that would say the same in fewer words.** A long block gets skimmed, so every word that adds nothing costs the block its reader; the reason behind a claim is one or two sentences near the top, and everything after that is shorter or gone.
+   Read the titles alone first, as a reader scanning the outline does. Each h2 names a section in a few words; a top level written as sentences is a page made in one pass with no sections, so say which sections its blocks fall into. Deeper, the title states the claim and the body argues it, so a heading that promises nothing over a body that states something hides the claim from everyone who did not open it.
 
-   Write the shorter version where there is one: quote what goes, show what stands. A verdict with no rewritten text is not a finding, and a cut is worth reporting only when the shorter version is visibly shorter and still says everything the original said. A claim restated in new words, and a line that would be true under any heading, are the usual material.
+   Then read each body against its title. A title that has swallowed its body leaves a heading above a single sentence, which costs an outline row to say what a bullet would have said: cover the title, read the body alone, and if it reads as a footnote to its heading it is a list item. A title that covers less than its body holds is the opposite, and the repair is to split the body or narrow the promise, never to widen the title until it restates everything.
 
-   A block already as short as its claim allows earns a proof-of-work line and nothing else: this is the check most prone to inventing work. Where lint would split a long block into children, that is lint's call; this one asks what the block says in fewer words at whatever size it ends up.
+   Two sibling titles that read the same, with nothing to tell them apart, break the outline as a map just as surely; the repair is to rename, never to delete one.
 
-Wiki-level (caller synthesizes):
+   Then look for claims that never became nodes: a `##` typed into a body, three or more `**Bold.**` lead-ins, a `---` rule of the body's own, a bullet that swelled into paragraphs, a row in a catalogue table of entities, a second claim in a block that already made one. And for the inverse, a list of ten or more short parallel items whose later items fall outside the name above them: the count is the signal, not the length of an item, and the repair is to cut the list where the subject changes.
 
-4. **Contradictions across pages.** The same number, date, name, or fact stated differently in two places. For fiction or mystifications: the wiki should be internally consistent even when it is consistently making things up. Compare only within the language facet; a fact that reads differently in a page and its translation twin is a translation matter for `wikilayer:translations`, not a contradiction here.
+   Weight tells the same story between siblings. A body several times longer than the blocks beside it at the same level is either a subject of its own, which goes to a page, or a topic that should have become child blocks. Say which of the two you are looking at.
+
+   Finally, the placement itself. A heading that does not cover its children, a rule filed under the wrong subject, a block that would be found by nobody looking for it. Recommend moving the node; never recommend moving it to another level so that its title fits, because depth follows structure and the title is written to fit the depth.
+2. **What the engine already keeps.** Every node carries its own history, its own `updated_at`, its place in the contents rail and the list of nodes linking to it, so a body repeating any of that goes stale the moment someone edits without touching it. Flag a block documenting its own obsolescence, a "checked in April" stamp, prose listing the sections below, a "back to X" footer.
+
+   A count is the sharpest form of the same fault, because nobody edits a sentence to fix arithmetic: "four page types", "seven languages carry it", where those items are the blocks beneath. The test is where the sentence gets its truth from. From the tree of this page, and it goes; from the subject, the platform or the rule itself, it stays, even where its number happens to match the tree today. A founding year is content, a review date is metadata.
+
+   A block that is mostly a hand-curated list of links is the same fault as an object rather than a sentence: "Contents", "See also", "Quick links". Strip the links and read what is left; if the block becomes nothing, it was navigation. Recommend deletion only after checking the one exception, and recommend deleting a tombstone only after confirming the content it names is live at the destination.
+
+   The exception is the more expensive finding of the two: nothing in the chrome lists a page, so a link in a body is a page's only way in. Never recommend cutting a link that is one, and flag a wiki whose content lives in sub-pages under a front page that renders empty.
+3. **Two places saying one thing.** Not wordiness inside a block, which is lint's, but the same claim carried twice: by a block and its sibling, by a body and the title above it, by a page and the one it was split from. Today it is a repetition; tomorrow one of the two is edited and it is a contradiction, and nobody will know which copy is current.
+
+Wiki-level (the caller synthesizes these from the digests and its own outline read):
+
+4. **Contradictions across pages.** The same number, date, name, or fact stated differently in two places. This outranks everything else in the report: a reader acts on whichever they met first and never learns the other existed. For fiction or mystifications: the wiki should be internally consistent even when it is consistently making things up. Compare only within the language facet; a fact that reads differently in a page and its translation twin is a translation matter for `wikilayer:translations`, not a contradiction here.
 5. **Missed DRY.** A subject mentioned substantively in three or more places, with no dedicated root page; recommend extracting. Count mentions within the facet only: a page's translation twin is the same mention in another language, not an additional one.
-6. **Sibling-blocks asking for a common parent.** Among the direct children of a page, two or more share an evident subtopic and would read better re-parented under a new intermediate block. Look at sibling title clusters.
+6. **A kinship the tree does not assert.** Among the direct children of a page, two or more belong to one subtopic with no node saying so. The tree currently asserts that they are siblings of everything else beside them, which is the false part; recommend a parent node and name what it would assert. Look at sibling title clusters.
+7. **The page as one reading.** The caller has the outline, so it judges this: past roughly 2,000 tokens of body, or a couple of dozen rows, a reader scrolls rather than reads and the contents rail stops being a map. Neither figure is a limit; a data page of a hundred parallel rows is not the target, and a page carrying several subjects that each stand alone is.
 
-## Evidence requirement
+   The test is whether a section could be opened cold. One that could is a page wearing a heading; sections that only make sense in sequence mean the page is long but whole, and the repair is to cut rather than to split. Report the weight of each top-level section beside the page total, because one section several times heavier than its siblings is the sharper signal.
 
-Every finding carries a citation: block URL plus the specific quote, title list, or shorter rewrite that demonstrates the issue. A subagent verdict of "looks fine" without proof-of-work is not acceptable; re-spawn that page if the verdict is thin.
+   Price the split before recommending it: a promoted section stops being met by anyone scrolling its old parent and lives only through a link somebody writes into a body. Say where that link belongs.
 
-## Severity
+   Here too: a page whose stitched document ends without a `## Links here` section is one nothing in this facet points at. Flag it unless it is the facet home.
 
-- **High**: contradictions; broken structural coherence (titles that don't add up to a chapter list).
-- **Medium**: missed DRY; sibling-grouping opportunities; a body spending more words than its claim needs.
-- **Low**: rhythm hiccups; phrasing judgment calls.
+## What a finding must carry
+
+Two things, and a candidate missing either is not a finding.
+
+A citation: the block URL plus the quote, the title list, or the shorter rewrite that demonstrates it. A subagent verdict of "looks fine" without proof-of-work is not acceptable; re-spawn that page if the verdict is thin.
+
+And what goes wrong if it is not applied, said concretely: what becomes false, or what a reader does that they would not have done. "This reads better the other way" is not that. The requirement is what keeps this skill from returning a list of rewordings, which is the failure it is most prone to.
+
+## Order, and what the report is
+
+Report in this order, because it is the order the work is done in, and every category above lands in one of its four steps:
+
+1. a contradiction: two places say different things and a reader acts on whichever they met first;
+2. a node where nobody will look for it, or a kinship the tree fails to assert: it will be written a second time by someone who did not find it;
+3. a repetition, a body restating what the engine keeps, a page past one reading: each goes wrong on its own, without anybody touching it;
+4. everything else this skill found.
+
+The report is observations, not a verdict. Which to act on is the author's call, and a finding refused with a stated reason is as closed as one applied; say this in the report rather than phrasing findings as instructions. What the author must not do is take the cheap end of the list because it is cheap and leave the top of it for later.
+
+Run again after the author has acted: the page is a different page now, and the arrangement they changed may have moved something else. The round ends when nothing left in the report changes what the wiki asserts.
