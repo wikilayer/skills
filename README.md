@@ -6,7 +6,7 @@ The two advisory skills split by what a finding costs. Nothing lint reports can 
 
 - **`wikilayer:lint`**: the text. Marks, link wording, voice, a block that lost its thread, words that say nothing. Cheap, run before every release.
 - **`wikilayer:review`**: the tree and the claims. Where each node sits, what a title promises against what its body holds, bodies restating what the engine already keeps, contradictions across pages, page size and reachability. Expensive, run quarterly or before major releases.
-- **`wikilayer:translations`**: cross-language parity. Audits coverage and fills the missing translations for a target language, leaving anything tagged `i18n-exempt` alone. Writes to the wiki, so it follows the authoring rules like any other edit.
+- **`wikilayer:translations`**: cross-language parity. Audits coverage and fills the missing translations for a target language. Writes to the wiki, so it follows the authoring rules like any other edit.
 
 Connect the Wikilayer MCP server at `https://wikilayer.org/mcp` before using the skills.
 

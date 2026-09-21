@@ -1,17 +1,17 @@
 ---
 name: translations
-description: Bring a wikilayer wiki, or one page in it, into translation parity with a target language. Audits cross-language coverage (missing translations, structural divergence, stale or orphan nodes), then translates and links the genuine gaps, leaving anything tagged i18n-exempt alone. A page target fills only that page's subtree, for a page just added or reworked. Unlike the wikilayer lint and review skills this skill writes to the wiki. Use when the user asks to translate a wiki or a single page, fill its missing translations, or check translation parity.
+description: Bring a wikilayer wiki, or one page in it, into translation parity with a target language. Audits cross-language coverage (missing translations, structural divergence, stale or orphan nodes), then translates and links the gaps. A page target fills only that page's subtree, for a page just added or reworked. Unlike the wikilayer lint and review skills this skill writes to the wiki. Use when the user asks to translate a wiki or a single page, fill its missing translations, or check translation parity.
 ---
 
 # wikilayer:translations
 
-Parity pass across languages. lint and review only advise; this skill also writes: it creates and links the translations a wiki is missing in a target language. It audits first, fills the genuine gaps, leaves deliberate asymmetries alone, and reports the judgment calls (structural divergence, staleness) for a human rather than forcing them.
+Parity pass across languages. lint and review only advise; this skill also writes: it creates and links the translations a wiki is missing in a target language. It audits first, fills the gaps, and reports the judgment calls (structural divergence, staleness) for a human rather than forcing them.
 
 ## Model
 
 Translations live as parallel nodes in the same wiki, grouped by `link_translation`: a topic has one node per language, all in one group. A wiki's `primary_language` is the source; source nodes carry that language or an empty `language` field. A target-language node is a translation linked into the same group.
 
-A source node is a **gap** when no node in its translation group carries the target language, and it is not exempt. Filling a gap means translating the source node, creating the target node with `language` set, and linking the two.
+A source node is a **gap** when no node in its translation group carries the target language. Filling a gap means translating the source node, creating the target node with `language` set, and linking the two.
 
 ## Procedure
 
@@ -22,7 +22,7 @@ The caller never holds page bodies. Bodies live inside subagents; the caller see
    **Scope: whole wiki or one page.** The target may be a whole wiki or a single page (its subtree). A `wiki` target brings the whole wiki to parity; a `page` target fills gaps only within that page's subtree, for example a page just added or reworked that you want translated now. The source language and the structural map still come from the wiki, but step 4 only spawns over source pages inside the scope.
 2. Read and accept every rules page the Wikilayer server requires before protected reads or writes, then carry the returned agreement tokens on every call they bind. A translation is a write like any other, so it answers to [what a node holds](https://wikilayer.org/smee-again/wikilayer-howto/54721-what-a-node-holds) and to [wording and marks](https://wikilayer.org/smee-again/wikilayer-howto/54729-wording-and-marks).
 3. Read the complete outline with `get_outline(<wiki-id>, max_depth=10)`, supplying the pagination arguments exposed by the client and continuing until `has_more` is false. Each row carries `language` (omitted when empty). This is the structural map: source-language pages, existing target-language pages, and their nesting. Tool names may be namespaced by the client; use the exposed Wikilayer tool whose final name matches the operation named here.
-4. Spawn one general-purpose subagent per source page in scope (the whole wiki, or just the target page's subtree; skip pages whose whole subtree is already linked, and pages tagged `i18n-exempt`). Each subagent:
+4. Spawn one general-purpose subagent per source page in scope (the whole wiki, or just the target page's subtree; skip pages whose whole subtree is already linked). Each subagent:
    - Reads the source page's **exact** content with `get_page_markdown(<page-id>)`. Read the verbatim source, never WebFetch the `.md` URL, which a model can reword. The `<!-- block:N -->` comment above each node is the id to link a translation to; the closing `## Links here` section is generated navigation and is never translated.
    - Calls `list_translations` on the page to find an existing target twin and reads it too, so it neither duplicates an existing translation nor silently overwrites one. Compare the two documents by their nodes only: each facet has its own inbound links, so a twin whose `## Links here` differs, or has none, is not a structural divergence and never a reason to write.
    - Translates only the **missing** nodes into the target language: neutral encyclopedic voice, links woven onto nouns, blockquotes preserved, cross-links (`page:N` / `block:N`) carried over verbatim. A translation mirrors the source node's title and body, it does not summarize or expand.
@@ -31,21 +31,16 @@ The caller never holds page bodies. Bodies live inside subagents; the caller see
    - Returns a compact report: the source page URL, the nodes it created and linked, and anything it chose not to touch (see below), with one-line reasons.
 5. The caller aggregates the per-page reports into one markdown report, grouped by the categories below. The caller does not translate; it only orchestrates and summarizes.
 
-## Exemptions
-
-A node tagged `i18n-exempt` is deliberately single-language. The skill never translates it, never flags it as a gap, and lists it under Exempt so the choice stays visible. Tag the page to exempt its whole subtree, or a block to exempt just that block. A wiki that wants some pages in one language only (a source-language-only appendix, a target-language-only note) marks them this way; everything untagged is assumed to want parity.
-
 ## What it fills vs flags
 
-The skill fills only unambiguous gaps: a source node with no target twin and no exemption. Three situations are reported for a human, never auto-resolved, because each can be deliberate:
+The skill fills only unambiguous gaps: a source node with no target twin. Three situations are reported for a human, never auto-resolved, because each can be deliberate:
 
 1. **Structural divergence.** A linked group exists, but the target subtree has more or fewer child nodes than the source (a target page deliberately richer or thinner than its source). Report the count difference and the diverging titles. Do not add or delete nodes to force a match.
 2. **Stale translation.** A target node's source twin has a later `updated_at`, so the source changed after it was translated. Report it as possibly out of date. Do not re-translate silently.
-3. **Orphan single-language node.** A node with no group and no `i18n-exempt` tag, in a language that is neither source nor target. Report it so the human either tags it exempt or links it.
+3. **Orphan single-language node.** A node with no group, in a language that is neither source nor target. Report it so the human can decide which translation group it belongs to.
 
 ## Severity
 
 - **Filled**: gaps the skill translated and linked this run. Each carries the new node URLs.
 - **Review**: structural divergence and stale translations. A human confirms whether the asymmetry is intended.
-- **Decide**: orphan nodes with no group and no exemption. A human tags them exempt or links them.
-- **Exempt**: nodes skipped by an `i18n-exempt` tag, listed so the deliberate gaps stay auditable.
+- **Decide**: orphan nodes with no group. A human decides which translation group they belong to.

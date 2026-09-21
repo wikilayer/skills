@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.19.0
+
+### Removed
+
+- translations: removed support for marking content `i18n-exempt`. When asked to bring a wiki or page into translation parity, the skill now translates every page and block that has no corresponding version in the target language, then links the new translation to its source. Before upgrading, remove the tag and all of its assignments from existing wikis; there is no replacement exemption mechanism.
+
 ## 0.18.1
 - translations: the instruction to the translator said "no em-dash" with no exception, and this skill writes. Translating into a language that uses the mark as ordinary punctuation, or requires it, therefore put prose a native reader sees as wrong straight into the wiki, with no report anyone could refuse. Punctuation now follows the target language's own conventions rather than the source's.
 - lint, translations, and the guide page they mirror: restraint with the em-dash was stated as a rule with a grammatical exception, and the exception named one language. That is two errors in one — the restraint is an English convention rather than a universal rule, and a language can use the mark as ordinary punctuation without being required to, which the exception did not cover. All three now say to judge by the conventions of the language in hand, and name German and Russian as examples rather than as the list.
