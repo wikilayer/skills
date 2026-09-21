@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.19.1
+
+### Fixed
+
+- lint: its metadata is valid YAML again, so strict plugin validation accepts the skill. The lint workflow itself is unchanged.
+
 ## 0.19.0
 
 ### Removed

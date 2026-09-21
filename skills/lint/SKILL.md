@@ -1,6 +1,6 @@
 ---
 name: lint
-description: Lint a wikilayer wiki, or one page in it, for what can never become false: marks, the wording of a link, voice, the form of a quotation, a block that lost its thread, and words that say nothing. Advisory only, never editing, and nothing it reports is worth a pass of its own, because these are fixed while the author is already in the node. What the wiki asserts is the wikilayer review skill's half. A page target is the focused pass right after editing that page; a wiki target is the full audit. Use when the user asks to lint a wiki or a single page, run the style checks, or tidy before publishing.
+description: "Lint a wikilayer wiki, or one page in it, for what can never become false: marks, the wording of a link, voice, the form of a quotation, a block that lost its thread, and words that say nothing. Advisory only, never editing, and nothing it reports is worth a pass of its own, because these are fixed while the author is already in the node. What the wiki asserts is the wikilayer review skill's half. A page target is the focused pass right after editing that page; a wiki target is the full audit. Use when the user asks to lint a wiki or a single page, run the style checks, or tidy before publishing."
 ---
 
 # wikilayer:lint
