@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.20.0
+
+### Fixed
+
+- lint, review, translations: read the whole outline with `max_depth=-1`; the former depth of 10 was an arbitrary silent truncation presented as a complete map.
+- lint, review, translations: resolve and report the wiki's `pages_tree` mode instead of inferring hierarchy from the current outline.
+- review: judge page placement, missing grouping and reachability differently in flat and hierarchical wikis, and read a page target's immediate structural neighbourhood when hierarchy is enabled.
+- translations: preserve page parents when hierarchy is enabled, keep pages flat when it is disabled, and create translated page trees by depth so a child is never scheduled before its translated parent exists.
+
 ## 0.19.1
 
 ### Fixed
