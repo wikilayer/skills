@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.20.1
+
+### Fixed
+
+- review: narrow the skill description to whole-page coherence checks after recent edits, so a request to research a subject mentioned in a wiki does not trigger a full wiki audit.
+- lint: make it the final polish pass after review and substantive edits, rather than an early style check.
+
 ## 0.20.0
 
 ### Fixed

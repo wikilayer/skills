@@ -1,6 +1,6 @@
 ---
 name: review
-description: "Reader-perspective review of a wikilayer wiki, or of one page in it: what does it assert, is any of it false, and does the arrangement say what the author meant it to say? Checks where each node sits, what a title promises against what its body holds, bodies restating what the engine already keeps, page size and reachability, contradictions across pages, and a claim carried in two places at once. Everything here can become false, which is what separates it from the wikilayer lint skill, whose findings never can and which reads the text instead; marks, wording, voice and paragraph form belong to that skill and are never reported here. Advisory only; never edits. A wiki target is expensive, for major releases or a quarterly pass; a page target is cheap and is the usual read right after one page was added or reworked. Use when the user asks to review a wiki or a single page, audit it as a reader, or check it for coherence."
+description: "Review the coherence of a whole Wikilayer page after recent edits. Advisory only; never edits."
 ---
 
 # wikilayer:review

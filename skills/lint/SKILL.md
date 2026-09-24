@@ -1,11 +1,11 @@
 ---
 name: lint
-description: "Lint a wikilayer wiki, or one page in it, for what can never become false: marks, the wording of a link, voice, the form of a quotation, a block that lost its thread, and words that say nothing. Advisory only, never editing, and nothing it reports is worth a pass of its own, because these are fixed while the author is already in the node. What the wiki asserts is the wikilayer review skill's half. A page target is the focused pass right after editing that page; a wiki target is the full audit. Use when the user asks to lint a wiki or a single page, run the style checks, or tidy before publishing."
+description: "Final polish of a Wikilayer page or wiki after review has finished and substantive edits are settled. Checks wording, marks, links, voice, quotations, and prose flow. Advisory only; never edits."
 ---
 
 # wikilayer:lint
 
-Advisory pass over the surface of the text. Read each block, apply the check list, emit a markdown report grouped by page. Do not apply fixes.
+Advisory pass over the surface of the text. Run it after review is complete and changes to claims or structure are settled. Read each block, apply the check list, emit a markdown report grouped by page. Do not apply fixes.
 
 This skill reads the text. Nothing it finds can become false: a mark, a phrasing, a paragraph that lost its thread is not wrong later, only worse to read, so the fix happens while the author is already in the node and never sends anyone back to re-read the page. What can become false belongs to the review skill, which reads the tree and the claims. Keep the two reports apart: merged into one list, the cheap findings crowd out the expensive ones, and the cheap ones get done because they are cheap.
 
