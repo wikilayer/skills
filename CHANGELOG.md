@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.21.0
+
+### Fixed
+
+- review: in a hierarchical wiki the skill treated the page tree as navigation every reader sees, so a home page listing the pages readers come for read as a restatement of the navigation to be cut. The navigation opens collapsed to the top level, expands only the path to the root on an inner page, and hides behind the menu button on a phone, so a body link below the top level is usually the only visible way there. The exception now follows what the navigation shows rather than what the tree holds.
+- review: the home page is judged as a home page. It is reported when it does not name the pages readers come for, for instance by linking only the top-level sections that hide them, or when it names a subject twice.
+- review: a heading over a single line had no check, so a top level of headings each followed by one line repeating the heading as a link passed clean. Such siblings are now reported as one finding, the list they should be. Mirrors the guide.
+
 ## 0.20.1
 
 ### Fixed

@@ -55,6 +55,8 @@ Per-page (a subagent judges these from the page text):
 
    A node that groups children names a section at any depth. It is never a finding for promising nothing, and its body is optional: naming a section is the whole job, and the claims are in the children.
 
+   The inverse is a heading over a single line: an outline row and a screenful of whitespace spent on what a bullet would say. Several siblings that each hold one line are one list, and so one finding, not one per heading; name the list they make. The sharpest case is a line that repeats the heading above it as a link to the page of the same name, where the title, the body and the navigation all say one word.
+
    Never recommend moving a node to another level so that its title fits, and never recommend widening a title until it restates its body. Depth follows the structure, and the title is written to fit the depth.
 2. **Where a node sits.** The tree asserts something about every node by where it put it: that these are of one kind, that this one is the exception, that this follows from that. Read each claim against its parent and its siblings and say where the tree asserts something untrue.
 
@@ -69,7 +71,9 @@ Per-page (a subagent judges these from the page text):
 
    A block that is mostly a hand-curated list of links is the same fault as an object rather than a sentence: "Contents", "See also", "Quick links". Strip the links and read what is left; if the block becomes nothing, it was navigation. Recommend deletion only after checking the one exception, and recommend deleting a tombstone only after confirming the content it names is live at the destination.
 
-   The exception depends on `pages_tree`. In a flat wiki, nothing in the chrome lists ordinary pages, so a link in a body may be a page's only way in; never recommend cutting that link. In a hierarchical wiki, the page tree is navigation, so a page reached through its ancestor chain does not need an invented body link merely to be reachable. In either mode, flag a facet whose entry page gives the reader no path into its content.
+   The exception is what the navigation actually shows, and it shows less than the tree holds. With `pages_tree=false` there is none: nothing in the chrome lists ordinary pages, so a link in a body may be a page's only way in; never recommend cutting that link. With `pages_tree=true` the navigation opens collapsed to the top level, an inner page expands only the path to the root, and on a phone it sits behind the menu button. So a body link to a page below the top level is, for most readers, the only visible way there, and it is not a copy of the navigation. What the tree does settle is reachability: a page reached through its ancestor chain does not need an invented body link merely to exist in the map.
+
+   The home page (`special_role=home`) is judged as a home page, never as an ordinary page of links. It is where a reader arrives without context, so it says what the wiki holds and links directly to the pages readers come for most, even where they sit deep in the tree; a list of such links is its content. Report a home page that does not name those pages, for instance one that links only the top-level sections they hide under, and report a subject it names twice. In either mode, flag a facet whose entry page gives the reader no path into its content.
 4. **Two places saying one thing.** Not wordiness inside a block, which is lint's, but the same claim carried twice: by a block and its sibling, by a body and the title above it, by a page and the one it was split from. Today it is a repetition; tomorrow one of the two is edited and it is a contradiction, and nobody will know which copy is current.
 
 Wiki-level (the caller synthesizes these from the digests and its own outline read):
