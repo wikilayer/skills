@@ -1,7 +1,7 @@
 {
   "name": "wikilayer",
   "description": "Audit and translate any wikilayer wiki, or a single page in it: lint for what can never become false, review for what the wiki asserts, and a cross-language translations pass that fills missing translations.",
-  "version": "0.21.0",
+  "version": "0.22.0",
   "author": {
     "name": "Maxim Oransky",
     "email": "info@wikilayer.org"

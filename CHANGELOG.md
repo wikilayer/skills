@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.22.0
+
+### Changed
+
+- review, lint: the order is now self-reading, review, lint. Before handing pages to review, the caller reads every page the edit touched, whole, and fixes what that reading shows. Without it, review spent rounds on slips a first reading would have caught, and each fix opened another round. The same order is now stated in the [Wikilayer manual](https://wikilayer.org/smee-again/wikilayer-howto/54798-working-in-a-wiki#block-54803).
+
 ## 0.21.0
 
 ### Fixed

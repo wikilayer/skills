@@ -15,6 +15,8 @@ The categories below mirror https://wikilayer.org/smee-again/wikilayer-howto/547
 
 ## Procedure
 
+Before the run, the caller reads every page the edit touched, whole, as its reader would, and fixes what that reading shows. A reviewer is for what the author cannot see from inside; a slip visible on a first reading costs a round here, and its fix opens the next one. This mirrors https://wikilayer.org/smee-again/wikilayer-howto/54798-working-in-a-wiki#block-54803.
+
 1. Resolve the target from the user's request (numeric id, URL, or unambiguous wiki/page name). If it is missing or ambiguous, ask. Resolve its owning wiki with `list_wikis(wiki_ids=[...])` and record `pages_tree`; never infer the setting from the outline. The same current shape can be deliberate hierarchy or a flat wiki that happens to contain few pages.
 
    **Scope: whole wiki or one page.** Read the target's `kind` with `get_outline` or `get_node`. A `wiki` target runs the full procedure; a `page` target reviews that page and its blocks, not descendant pages, and skips the wiki-level synthesis in step 4. When `pages_tree` is true, a page review still reads the target page's immediate page parent, page siblings and child-page titles as structural context for category 2; it does not review their bodies. Reach for a page target when one page was just added or reworked; use a wiki target for the periodic whole-body pass.

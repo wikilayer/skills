@@ -5,7 +5,7 @@ Audit and translate any [Wikilayer](https://wikilayer.org) wiki from Claude Code
 The two advisory skills split by what a finding costs. Nothing lint reports can become false, so it is fixed in passing; everything review reports can, so the page is read again after the author has acted.
 
 - **`wikilayer:lint`**: the text. Marks, link wording, voice, a block that lost its thread, words that say nothing. Run last, after review and substantive edits, for final polish.
-- **`wikilayer:review`**: the tree and the claims. Where each node sits, what a title promises against what its body holds, bodies restating what the engine already keeps, contradictions across pages, page size and reachability. Review the whole page after recent edits; run a whole-wiki audit explicitly for major releases or periodic checks.
+- **`wikilayer:review`**: the tree and the claims. Where each node sits, what a title promises against what its body holds, bodies restating what the engine already keeps, contradictions across pages, page size and reachability. Review the whole page after recent edits, once you have read every touched page yourself, whole; run a whole-wiki audit explicitly for major releases or periodic checks.
 - **`wikilayer:translations`**: cross-language parity. Audits coverage and fills the missing translations for a target language. Writes to the wiki, so it follows the authoring rules like any other edit.
 
 Connect the Wikilayer MCP server at `https://wikilayer.org/mcp` before using the skills.
