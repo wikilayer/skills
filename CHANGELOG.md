@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.27.0
+
+### Changed
+
+- review: the home page and every page with child pages are judged by featured navigation. They should open with what is worth reading below and link a few pages readers come for, rather than copy the tree by listing their children. A full list is right only when the reader must choose among all of them, as with ways to install.
+
 ## 0.26.0
 
 ### Changed
