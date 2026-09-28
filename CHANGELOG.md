@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.24.0
+
+### Added
+
+- review, lint: a target can be a list of pages in one wiki, for an edit that touched several. Each page is checked as a page target; review then compares the listed pages with each other for contradictions and duplication, as it does across a whole wiki, without reading the rest of the wiki.
+
 ## 0.23.0
 
 ### Changed

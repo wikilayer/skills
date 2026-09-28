@@ -1,6 +1,6 @@
 ---
 name: review
-description: "Review the coherence of a whole Wikilayer page after recent edits, once you have read it whole yourself and fixed what you found: a check on finished work, not a way to finish it. Advisory only; never edits."
+description: "Review the coherence of a Wikilayer page, a list of pages or a whole wiki after recent edits, once you have read them whole yourself and fixed what you found: a check on finished work, not a way to finish it. Advisory only; never edits."
 ---
 
 # wikilayer:review
@@ -19,7 +19,7 @@ Before the run, the caller reads every page the edit affects, whole, as a reader
 
 1. Resolve the target from the user's request (numeric id, URL, or unambiguous wiki/page name). If it is missing or ambiguous, ask. Resolve its owning wiki with `list_wikis(wiki_ids=[...])` and record `pages_tree`; never infer the setting from the outline. The same current shape can be deliberate hierarchy or a flat wiki that happens to contain few pages.
 
-   **Scope: whole wiki or one page.** Read the target's `kind` with `get_outline` or `get_node`. A `wiki` target runs the full procedure; a `page` target reviews that page and its blocks, not descendant pages, and skips the wiki-level synthesis in step 4. When `pages_tree` is true, a page review still reads the target page's immediate page parent, page siblings and child-page titles as structural context for category 2; it does not review their bodies. Reach for a page target when one page was just added or reworked; use a wiki target for the periodic whole-body pass.
+   **Scope: whole wiki, one page, or a list of pages.** Read each target's `kind` with `get_outline` or `get_node`. A `wiki` target runs the full procedure; a `page` target reviews that page and its blocks, not descendant pages, and skips the wiki-level synthesis in step 4. A list of pages, all in one wiki, reviews each as a page target and then runs step 4 across the listed pages only. When `pages_tree` is true, a page review still reads the target page's immediate page parent, page siblings and child-page titles as structural context for category 2; it does not review their bodies. Reach for a page target when one page was just added or reworked, a list when an edit touched several pages, and a wiki target for the periodic whole-body pass.
 
    **Pick the language facet.** `get_outline` rows carry a `language` field; collect the distinct languages present. If the wiki is monolingual, the whole wiki is the facet and the rest of this procedure runs unchanged. If it is multilingual, this skill audits one language at a time: take the target language from the user's request (for example `wiki 1 in en`), otherwise default to the wiki's primary language (the root's language). Every step below operates on the **target-language facet** only, the nodes whose effective language is the target (an empty `language` inherits the primary). State the facet in the report header. A page target is already one language, so it needs no facet choice.
 
@@ -34,7 +34,7 @@ Before the run, the caller reads every page the edit affects, whole, as a reader
    Read the verbatim source, never a paraphrase: do **not** WebFetch the page or its `.md` URL. WebFetch routes the page through a model that can silently reword or reorder content, which corrupts an exact-text audit (a block list was observed reordered this way). The tool returns the stored markdown untouched.
 
    Two things in that document are the engine's, not the author's: the `<!-- block:N -->` comment above each node, which is how a finding cites the node it belongs to, and the closing `## Links here` section after a `---` rule. Neither is ever a finding, and the rule before the section is not a heading smuggled into a body. Its absence is the evidence category 8 reads: a page whose document ends without one is a page nothing points at.
-4. **(Wiki target only.)** Synthesize the wiki-level pass from the digests once every subagent has reported: cross-page contradictions, missed DRY, and structural grouping, all within the target facet. The caller does this; it is the only step that holds every page at once, and it is what a wiki target is bought for. Skip it and the run is a stack of page reviews, which is what the target was chosen not to be.
+4. **(Wiki or list target.)** Synthesize the wiki-level pass from the digests once every subagent has reported: cross-page contradictions, missed DRY, and structural grouping, all within the target facet, and for a list within the listed pages. The caller does this; it is the only step that holds every page at once, and it is what a wiki or list target is bought for. Skip it and the run is a stack of page reviews, which is what the target was chosen not to be.
 
    Before reporting a contradiction, re-read the two blocks it names with `get_page_markdown`. A digest is a summary, and a summary can manufacture both an agreement and a conflict that the text does not hold.
 5. Emit one markdown report, its findings ordered as the closing section says rather than grouped by the category that produced them. Caller never writes back to the wiki.

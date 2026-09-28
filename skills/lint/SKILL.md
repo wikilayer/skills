@@ -1,6 +1,6 @@
 ---
 name: lint
-description: "Final polish of a Wikilayer page or wiki after review has finished and substantive edits are settled. Checks wording, marks, links, voice, quotations, and prose flow. Advisory only; never edits."
+description: "Final polish of a Wikilayer page, a list of pages or a wiki after review has finished and substantive edits are settled. Checks wording, marks, links, voice, quotations, and prose flow. Advisory only; never edits."
 ---
 
 # wikilayer:lint
@@ -17,7 +17,7 @@ The caller never reads page bodies. Bodies live inside subagents; the caller onl
 
 1. Resolve the target from the user's request (numeric id, URL, or unambiguous wiki/page name). If it is missing or ambiguous, ask. Resolve its owning wiki with `list_wikis(wiki_ids=[...])` and record `pages_tree`; never infer the setting from the current shape of the outline. A flat wiki and a hierarchical wiki can temporarily have the same shape.
 
-   **Scope: whole wiki or one page.** Read the target's `kind` with `get_outline` or `get_node`. A `wiki` target lints every page in the facet; a `page` target lints that page and its blocks, not descendant pages. Every check runs per page either way. Use a page target for a focused pass after editing one page; a wiki target for a full audit.
+   **Scope: whole wiki, one page, or a list of pages.** Read each target's `kind` with `get_outline` or `get_node`. A `wiki` target lints every page in the facet; a `page` target lints that page and its blocks, not descendant pages; a list of pages, all in one wiki, lints each as a page target. Every check runs per page either way. Use a page target or a list for a focused pass after an edit; a wiki target for a full audit.
 
    `pages_tree` does not change the prose checks, but it changes how pages are enumerated and how links are understood. When it is true, a page may sit below another page and a link to that child is not a same-page link. When it is false, ordinary pages are flat peers. State the mode in the report header so the structural context of the run is explicit.
 
