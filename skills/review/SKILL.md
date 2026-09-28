@@ -1,6 +1,6 @@
 ---
 name: review
-description: "Review the coherence of a whole Wikilayer page after recent edits. Advisory only; never edits."
+description: "Review the coherence of a whole Wikilayer page after recent edits, once you have read it whole yourself and fixed what you found: a check on finished work, not a way to finish it. Advisory only; never edits."
 ---
 
 # wikilayer:review
@@ -15,7 +15,7 @@ The categories below mirror https://wikilayer.org/smee-again/wikilayer-howto/547
 
 ## Procedure
 
-Before the run, the caller reads every page the edit touched, whole, as its reader would, and fixes what that reading shows. A reviewer is for what the author cannot see from inside; a slip visible on a first reading costs a round here, and its fix opens the next one. This mirrors https://wikilayer.org/smee-again/wikilayer-howto/54798-working-in-a-wiki#block-54803.
+Before the run, the caller reads every page the edit affects, whole, as a reader who does not know the author's intent, and fixes what that reading shows. Review is a check on finished work, not a way to finish it: a reviewer is for what the author cannot see from inside, and a slip visible on a first reading costs a round here while its fix opens the next one. Many findings mean the caller skipped that reading, so the caller goes back to it rather than into another round. Rounds end when a fresh run returns nothing that would change what the wiki asserts. This mirrors https://wikilayer.org/smee-again/wikilayer-howto/54798-editing-a-wiki#block-54803.
 
 1. Resolve the target from the user's request (numeric id, URL, or unambiguous wiki/page name). If it is missing or ambiguous, ask. Resolve its owning wiki with `list_wikis(wiki_ids=[...])` and record `pages_tree`; never infer the setting from the outline. The same current shape can be deliberate hierarchy or a flat wiki that happens to contain few pages.
 

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.23.0
+
+### Changed
+
+- review: its description now says when to call it: after you have read the page whole yourself and fixed what you found. Review is a check on finished work, not a way to finish it. Many findings mean that reading was skipped, and the answer is to go back to it rather than run another round. Rounds end when a fresh run returns nothing that would change what the wiki asserts, even if wording findings remain. The same wording is now in the [Wikilayer manual](https://wikilayer.org/smee-again/wikilayer-howto/54798-editing-a-wiki#block-54803).
+
 ## 0.22.0
 
 ### Changed
