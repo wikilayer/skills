@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.26.0
+
+### Changed
+
+- review, lint, translations: pages are assumed to nest, as they do by default: a page sits under the wiki or under another page, and that tree is the wiki's navigation. A wiki with page hierarchy turned off is treated as the old flat mode in one line of each skill. review no longer reports the hierarchy setting in its header.
+
 ## 0.25.1
 
 ### Fixed
