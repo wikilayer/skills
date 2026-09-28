@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.25.0
+
+### Changed
+
+- review, lint: one agent reads every page in scope itself instead of handing each page to its own agent. A page per agent spent tokens on every page many times over and left nobody who had read two pages, which is where contradictions and repetition between them live. review now also says that the agent running it is not the one that wrote the pages.
+
 ## 0.24.0
 
 ### Added

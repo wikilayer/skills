@@ -15,7 +15,7 @@ The categories below mirror https://wikilayer.org/smee-again/wikilayer-howto/547
 
 ## Procedure
 
-Before the run, the caller reads every page the edit affects, whole, as a reader who does not know the author's intent, and fixes what that reading shows. Review is a check on finished work, not a way to finish it: a reviewer is for what the author cannot see from inside, and a slip visible on a first reading costs a round here while its fix opens the next one. Many findings mean the caller skipped that reading, so the caller goes back to it rather than into another round. Rounds end when a fresh run returns nothing that would change what the wiki asserts. This mirrors https://wikilayer.org/smee-again/wikilayer-howto/54798-editing-a-wiki#block-54803.
+One agent runs the whole review, and not the one that wrote the pages: the author reads what they meant. Before the run, the author reads every page the edit affects, whole, as a reader who does not know the author's intent, and fixes what that reading shows. Review is a check on finished work, not a way to finish it: a reviewer is for what the author cannot see from inside, and a slip visible on a first reading costs a round here while its fix opens the next one. Many findings mean the caller skipped that reading, so the caller goes back to it rather than into another round. Rounds end when a fresh run returns nothing that would change what the wiki asserts. This mirrors https://wikilayer.org/smee-again/wikilayer-howto/54798-editing-a-wiki#block-54803.
 
 1. Resolve the target from the user's request (numeric id, URL, or unambiguous wiki/page name). If it is missing or ambiguous, ask. Resolve its owning wiki with `list_wikis(wiki_ids=[...])` and record `pages_tree`; never infer the setting from the outline. The same current shape can be deliberate hierarchy or a flat wiki that happens to contain few pages.
 
@@ -25,23 +25,19 @@ Before the run, the caller reads every page the edit affects, whole, as a reader
 
    A language twin is the same topic in another language, never a finding. A page and its translation are not a contradiction, not missed DRY, not a duplicate. Checking a translation against its source is the job of `wikilayer:translations`, not this skill, so nodes outside the target facet stay out of scope for this run.
 2. Read and accept any rules the Wikilayer server requires before protected reads, then carry the returned agreement token on every call it binds. Read the complete outline with `get_outline(<wiki-id>, max_depth=-1)`, supplying the pagination arguments exposed by the client and continuing until `has_more` is false. No finite depth is a complete-outline request. Use it as the structural map of the facet, and keep each row's `parent_id`, `depth`, `tokens` and `child_count`: categories 2, 7 and 8 depend on them. On a multilingual wiki the facet home is the target language's home (the wiki root for the primary language, the root's translation twin for another). State whether `pages_tree` is enabled in the report header. Tool names may be namespaced by the client; use the exposed Wikilayer tool whose final name matches the operation named here.
-3. Spawn one general-purpose subagent per page, passing each the agreement signature from step 2 and requiring it on every call that binds it. Each subagent reads the page's **exact** content with `get_page_markdown(<page-id>)`, in reading order already. It runs the per-page categories below and returns a verdict in two parts.
-
-   The first part is the findings: a proof-of-work line per clean block, and per finding a cited quote, the block URL, and what goes wrong if it is not applied. The second is a digest of the page, and it is what the wiki-level pass runs on: every substantive claim the page states, one line each, carrying its block id and the number, date, name or rule it asserts, followed by the subjects the page treats at length. Without the digest step 4 has nothing to collate. A contradiction between two pages lives in what each of them claims, and once the pages have been read in parallel nobody holds the claims of both.
-
-   The fan-out is mechanics, not a division of the task. A whole wiki does not fit one context and an exact-text audit cannot run on a summary, so the pages are read at once and only their digests come back. Say this when reporting: the deliverable is one review of the whole body, and the per-page reads are how it was produced.
+3. Read every page in scope yourself with `get_page_markdown(<page-id>)`, which returns it whole and in reading order, and run the per-page categories below on it. Do not hand pages to other agents: the review exists for how the pages read together, and a reader who saw one page cannot see that.
 
    Read the verbatim source, never a paraphrase: do **not** WebFetch the page or its `.md` URL. WebFetch routes the page through a model that can silently reword or reorder content, which corrupts an exact-text audit (a block list was observed reordered this way). The tool returns the stored markdown untouched.
 
    Two things in that document are the engine's, not the author's: the `<!-- block:N -->` comment above each node, which is how a finding cites the node it belongs to, and the closing `## Links here` section after a `---` rule. Neither is ever a finding, and the rule before the section is not a heading smuggled into a body. Its absence is the evidence category 8 reads: a page whose document ends without one is a page nothing points at.
-4. **(Wiki or list target.)** Synthesize the wiki-level pass from the digests once every subagent has reported: cross-page contradictions, missed DRY, and structural grouping, all within the target facet, and for a list within the listed pages. The caller does this; it is the only step that holds every page at once, and it is what a wiki or list target is bought for. Skip it and the run is a stack of page reviews, which is what the target was chosen not to be.
+4. **(Wiki or list target.)** Once every page in scope is read, run the wiki-level categories across them: contradictions, missed DRY and structural grouping, within the target facet, and for a list within the listed pages. Skip it and the run is a stack of page reviews, which is what the target was chosen not to be.
 
-   Before reporting a contradiction, re-read the two blocks it names with `get_page_markdown`. A digest is a summary, and a summary can manufacture both an agreement and a conflict that the text does not hold.
-5. Emit one markdown report, its findings ordered as the closing section says rather than grouped by the category that produced them. Caller never writes back to the wiki.
+   Before reporting a contradiction, re-read the two blocks it names.
+5. Emit one markdown report, its findings ordered as the closing section says rather than grouped by the category that produced them. Never write back to the wiki.
 
 ## Categories
 
-Per-page (a subagent judges these from the page text):
+Per-page (judged from each page's text):
 
 1. **The outline against the page.** Read the titles alone first and stop there, because that is the whole map a reader has when deciding what to open. Say what you expect each node to hold. Only then read the bodies, and report every place the map was wrong.
 
@@ -78,12 +74,12 @@ Per-page (a subagent judges these from the page text):
    The home page (`special_role=home`) is judged as a home page, never as an ordinary page of links. It is where a reader arrives without context, so it says what the wiki holds and links directly to the pages readers come for most, even where they sit deep in the tree; a list of such links is its content. Report a home page that does not name those pages, for instance one that links only the top-level sections they hide under, and report a subject it names twice. In either mode, flag a facet whose entry page gives the reader no path into its content.
 4. **Two places saying one thing.** Not wordiness inside a block, which is lint's, but the same claim carried twice: by a block and its sibling, by a body and the title above it, by a page and the one it was split from. Today it is a repetition; tomorrow one of the two is edited and it is a contradiction, and nobody will know which copy is current.
 
-Wiki-level (the caller synthesizes these from the digests and its own outline read):
+Wiki-level (judged across the pages in scope, with the outline):
 
 5. **Contradictions across pages.** The same number, date, name, or fact stated differently in two places. This outranks everything else in the report: a reader acts on whichever they met first and never learns the other existed. For fiction or mystifications: the wiki should be internally consistent even when it is consistently making things up. Compare only within the language facet; a fact that reads differently in a page and its translation twin is a translation matter for `wikilayer:translations`, not a contradiction here.
 6. **Missed DRY.** A subject treated substantively in several places with no dedicated root page of its own; recommend extracting. Count mentions within the facet only: a page's translation twin is the same mention in another language, not an additional one.
 7. **A kinship the tree does not assert.** This page-level check runs only when `pages_tree=true`. Among the direct child pages of a page, two or more may belong to one subtopic with no page saying so. The tree currently asserts that they are siblings of everything else beside them, which is the false part; name the unasserted kinship and what a reader loses. Look at sibling title clusters. In a flat wiki, do not turn a thematic cluster into a missing-parent finding: page nesting is disabled by design.
-8. **The page as one reading.** The caller has the outline, so it judges this: past a couple of dozen rows, or a few screens of body, a reader scrolls rather than reads and the contents rail stops being a map. Neither is a limit and neither decides on its own — a data page of a hundred parallel rows is not the target, and a page carrying several subjects that each stand alone is one at half that size.
+8. **The page as one reading.** Judged from the outline: past a couple of dozen rows, or a few screens of body, a reader scrolls rather than reads and the contents rail stops being a map. Neither is a limit and neither decides on its own — a data page of a hundred parallel rows is not the target, and a page carrying several subjects that each stand alone is one at half that size.
 
    The test is whether a section could be opened cold. One that could is a page wearing a heading; sections that only make sense in sequence mean the page is long but whole, and the repair is to cut rather than to split. Report the weight of each top-level section beside the page total, because a section several times heavier than its siblings is the sharper signal: it is either a subject of its own or a topic whose parts never became child nodes, and saying which of the two it is is the finding.
 
@@ -95,7 +91,7 @@ Wiki-level (the caller synthesizes these from the digests and its own outline re
 
 Two things, and a candidate missing either is not a finding.
 
-A citation: the block URL plus the quote, or the list of titles, that demonstrates it. A subagent verdict of "looks fine" without proof-of-work is not acceptable; re-spawn that page if the verdict is thin.
+A citation: the block URL plus the quote, or the list of titles, that demonstrates it. A page reported clean carries a proof-of-work line per block; "looks fine" is not one.
 
 And what goes wrong if it is not applied, said concretely: what becomes false, or what a reader does that they would not have done. "This reads better the other way" is not that. The requirement is what keeps this skill from returning a list of rewordings, which is the failure it is most prone to.
 
