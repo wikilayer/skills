@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.25.1
+
+### Fixed
+
+- review: links to the principles at their new place in the Wikilayer manual, the Writing a wiki page. The old Principles page no longer exists.
+
 ## 0.25.0
 
 ### Changed

@@ -11,7 +11,7 @@ This skill reads as a reader; lint reads the text. Everything found here can bec
 
 **This skill does not check form.** Marks, the em-dash, wording, voice, the shape of a paragraph, a block that lost its thread or spends more words than its claim needs: all lint's, and reporting one here is a defect in the run. A typographic marker inside a body — a bold lead-in, a horizontal rule, a bullet that runs for paragraphs — is at most the trace of a claim that never became a node. The finding is the claim, quoted, and the fact that the outline does not show it; the marker is how you noticed, never what you report, and a count of markers is not a finding at all. Nothing here is decided by counting.
 
-The categories below mirror https://wikilayer.org/smee-again/wikilayer-howto/54721-what-a-node-holds and the principles they come from at https://wikilayer.org/smee-again/wikilayer-howto/54712-principles, duplicated here so the skill runs self-contained against any wikilayer instance, including one with no authoring guide present. When either page gains or changes a rule, mirror it here.
+The categories below mirror https://wikilayer.org/smee-again/wikilayer-howto/54721-what-a-node-holds and the principles they come from at https://wikilayer.org/smee-again/wikilayer-howto/59315-writing-a-wiki, duplicated here so the skill runs self-contained against any wikilayer instance, including one with no authoring guide present. When either page gains or changes a rule, mirror it here.
 
 ## Procedure
 
