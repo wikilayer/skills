@@ -8,6 +8,8 @@ The two advisory skills split by what a finding costs. Nothing lint reports can 
 - **`wikilayer:review`**: the tree and the claims. Where each node sits, what a title promises against what its body holds, bodies restating what the engine already keeps, contradictions across pages, page size and reachability. Review the whole page after recent edits, once you have read every touched page yourself, whole; run a whole-wiki audit explicitly for major releases or periodic checks.
 - **`wikilayer:translations`**: cross-language parity. Audits coverage and fills the missing translations for a target language. Writes to the wiki, so it follows the authoring rules like any other edit.
 
+`lint` and `review` read the audited wiki's rules page and apply the checklist it keeps for them in a block titled with the skill's name, `wikilayer:lint` or `wikilayer:review`, on top of their own checks.
+
 Connect the Wikilayer MCP server at `https://wikilayer.org/mcp` before using the skills.
 
 ## Claude Code

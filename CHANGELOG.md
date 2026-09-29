@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.28.0
+
+### Added
+
+- review, lint: each reads the wiki's rules page whole and applies the checklist a block titled with its own name (`wikilayer:review`, `wikilayer:lint`) keeps there, on top of its own checks and never instead of them. A wiki's peculiarities, such as the word list its text is held to, then reach every check through its rules, and nothing is added to the order of work wiki by wiki.
+
 ## 0.27.0
 
 ### Changed
