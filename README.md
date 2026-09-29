@@ -2,7 +2,7 @@
 
 Audit and translate any [Wikilayer](https://wikilayer.org) wiki from Claude Code or Codex. Three skills: `lint` and `review` are advisory (they recommend, never edit); `translations` also writes, filling a wiki's missing translations.
 
-The two advisory skills split by what a finding costs. Nothing lint reports can become false, so it is fixed in passing; everything review reports can, so the page is read again after the author has acted.
+The two advisory skills split by what a finding costs. Nothing lint reports can become false, so it is fixed in passing; everything review reports can, so the author weighs each finding.
 
 - **`wikilayer:lint`**: the text. Marks, link wording, voice, a block that lost its thread, words that say nothing. Run last, after review and substantive edits, for final polish.
 - **`wikilayer:review`**: the tree and the claims. Where each node sits, what a title promises against what its body holds, bodies restating what the engine already keeps, contradictions across pages, page size and reachability. Review the whole page after recent edits, once you have read every touched page yourself, whole; run a whole-wiki audit explicitly for major releases or periodic checks.

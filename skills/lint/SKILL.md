@@ -5,7 +5,7 @@ description: "Final polish of a Wikilayer page, a list of pages or a wiki after 
 
 # wikilayer:lint
 
-Advisory pass over the surface of the text. It is the last of three steps: the author reads every page the edit affects whole and fixes what that shows, then review runs until a fresh run returns nothing that would change what the wiki asserts, then this. Run it only once changes to claims or structure are settled. Read each block, apply the check list, emit a markdown report grouped by page. Do not apply fixes.
+Advisory pass over the surface of the text. It is the last of three steps: the author reads every page the edit affects whole and fixes what that shows, then review, then this. Run it only once changes to claims or structure are settled. Read each block, apply the check list, emit a markdown report grouped by page. Do not apply fixes.
 
 This skill reads the text. Nothing it finds can become false: a mark, a phrasing, a paragraph that lost its thread is not wrong later, only worse to read, so the fix happens while the author is already in the node and never sends anyone back to re-read the page. What can become false belongs to the review skill, which reads the tree and the claims. Keep the two reports apart: merged into one list, the cheap findings crowd out the expensive ones, and the cheap ones get done because they are cheap.
 

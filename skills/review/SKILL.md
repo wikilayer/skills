@@ -15,7 +15,7 @@ The categories below mirror https://wikilayer.org/smee-again/wikilayer-howto/547
 
 ## Procedure
 
-One agent runs the whole review, and not the one that wrote the pages: the author reads what they meant. Before the run, the author reads every page the edit affects, whole, as a reader who does not know the author's intent, and fixes what that reading shows. Review is a check on finished work, not a way to finish it: a reviewer is for what the author cannot see from inside, and a slip visible on a first reading costs a round here while its fix opens the next one. Many findings mean the caller skipped that reading, so the caller goes back to it rather than into another round. Rounds end when a fresh run returns nothing that would change what the wiki asserts. This mirrors https://wikilayer.org/smee-again/wikilayer-howto/54798-editing-a-wiki#block-54803.
+One agent runs the whole review, and not the one that wrote the pages: the author reads what they meant. Before the run, the author reads every page the edit affects, whole, as a reader who does not know the author's intent, and fixes what that reading shows. Review is a check on finished work, not a way to finish it: a reviewer is for what the author cannot see from inside, and a slip visible on a first reading costs a review here. Many findings mean the caller skipped that reading, so the caller goes back to it rather than into another round. This mirrors https://wikilayer.org/smee-again/wikilayer-howto/54798-editing-a-wiki#block-54803.
 
 1. Resolve the target from the user's request (numeric id, URL, or unambiguous wiki/page name). If it is missing or ambiguous, ask. Resolve its owning wiki with `list_wikis(wiki_ids=[...])`. Pages nest: a page sits under the wiki or under another page, and that page tree is the wiki's navigation. A wiki whose `list_wikis` row has `pages_tree=false` is in the old flat mode, where every ordinary page hangs from the wiki and nothing in the chrome lists pages; there, report no missing page parent or unasserted kinship, and treat a page without inbound links as unreachable.
 
@@ -107,5 +107,3 @@ Report in this order, because it is the order the work is done in, and every cat
 4. everything else this skill found.
 
 The report is observations, not a verdict. Which to act on is the author's call, and a finding refused with a stated reason is as closed as one applied; say this in the report rather than phrasing findings as instructions. What the author must not do is take the cheap end of the list because it is cheap and leave the top of it for later.
-
-Run again after the author has acted: the page is a different page now, and the arrangement they changed may have moved something else. The round ends when nothing left in the report changes what the wiki asserts.

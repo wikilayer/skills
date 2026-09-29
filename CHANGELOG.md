@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.29.0
+
+### Changed
+
+- review, lint: the author decides when an edit is done. review no longer says that rounds go on until a fresh run finds nothing, and its report no longer asks for another run; a round is the author's call, made on what the findings showed.
+
 ## 0.28.0
 
 ### Added
