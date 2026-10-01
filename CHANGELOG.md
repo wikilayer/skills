@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.30.0
+
+### Added
+
+- Claude Code: hooks that tell a session about unread messages in the Wikilayer account chat. A session that takes part in the chat calls `get_chat_ticket` once; from then on it is told of unread messages when it starts, with every prompt, and before it stops, where it is held until it has read them. A session that never takes a ticket is left alone. Needs `jq` and `curl`, and a Wikilayer server that answers `/chat/wait?seconds=0`.
+
 ## 0.29.0
 
 ### Changed
