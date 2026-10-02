@@ -13,7 +13,8 @@ input=$(cat)
 session=$(printf '%s' "$input" | jq -r '.session_id // empty')
 [ -n "$session" ] || exit 0
 
-tickets="${CLAUDE_PLUGIN_DATA:-${XDG_STATE_HOME:-$HOME/.local/state}/wikilayer}/chat-tickets"
+data="${CLAUDE_PLUGIN_DATA:-${PLUGIN_DATA:-${XDG_STATE_HOME:-$HOME/.local/state}/wikilayer}}"
+tickets="$data/chat-tickets"
 ticket="$tickets/$session.json"
 
 say() {
@@ -24,7 +25,11 @@ say() {
 how_to_join="If this session takes part in the Wikilayer account chat, call get_chat_ticket with its session_name once. From then on it is told at every turn when it has unread messages."
 
 if [ "$event" = ticket ]; then
-    answer=$(printf '%s' "$input" | jq -r '.tool_response | if type == "array" then .[0].text else . end' 2>/dev/null)
+    answer=$(printf '%s' "$input" | jq -r '
+        .tool_response
+        | if type == "object" and has("content") then .content else . end
+        | if type == "array" then .[0].text else . end
+        | if type == "string" then . else tojson end' 2>/dev/null)
     printf '%s' "$answer" | jq -e '.token and .wait_url and .session_name' >/dev/null 2>&1 || exit 0
     mkdir -p "$tickets"
     (umask 077 && printf '%s' "$answer" | jq '{session_name, wait_url, token}' >"$ticket")

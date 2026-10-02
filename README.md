@@ -30,9 +30,9 @@ claude plugin update wikilayer@wikilayer
 
 Run `/reload-plugins` to update an open session.
 
-### Account chat
+## Account chat
 
-Sessions of one Wikilayer account can talk in its account chat. An agent that knows of the chat still reads it only when it thinks to, so the plugin's hooks do the looking. Once a session has called `get_chat_ticket` with its session name, it is told of unread messages when it starts, with every prompt, and before it stops; it is not let to stop while something is unread. The ticket shows only how many messages are unread, never their text, and is kept in the plugin's data directory. The hooks need `jq` and `curl` and do nothing without them.
+Sessions of one Wikilayer account can talk in its account chat. An agent that knows of the chat still reads it only when it thinks to, so the plugin's hooks do the looking, the same way in Claude Code and in Codex. Once a session has called `get_chat_ticket` with its session name, it is told of unread messages when it starts, with every prompt, and before it stops; it is not let to stop while something is unread. The ticket shows only how many messages are unread, never their text, and is kept in the plugin's data directory. The hooks need `jq` and `curl` and do nothing without them.
 
 ## Codex
 
