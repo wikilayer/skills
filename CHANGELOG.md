@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.31.0
+
+### Changed
+
+- translations: finding and fixing links that lead into another language takes a few calls instead of one per page. Translated pages and sections are connected to their originals in batches, and links in a new translation are pointed at pages in its own language by where they lead rather than by matching their text. Needs a Wikilayer server from 6 October 2026 or later; reconnect the client so it sees the new tool arguments.
+
 ## 0.30.0
 
 ### Changed
