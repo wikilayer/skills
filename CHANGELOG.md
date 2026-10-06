@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.33.0
+
+### Changed
+
+- translations: translated pages are connected to their originals by the session you talk to, in batches, rather than by each helper agent. A helper's write could be refused by your client's permission check and leave translations unconnected.
+- translations: a large wiki is translated by a handful of helpers, each taking up to ten pages that share a parent, instead of one helper per page.
+- translations: a term the term list lacks reads the same everywhere: helpers report the words they chose, and where two chose differently, one wins and the other pages are rewritten to match. The choices appear in the report for you to check.
+- translations: text that would overflow a page's length limit is tightened rather than cut; prompts and example text shown in code blocks are translated, while code stays as it is.
+
 ## 0.32.0
 
 ### Changed
