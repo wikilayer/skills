@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.30.0
+
+### Changed
+
+- translations: links inside a translated page now lead to pages in the same language. Earlier runs kept the original page's links, so a reader of the French version who clicked a link landed in English.
+- translations: each language version may differ from the original on purpose. When you translate a whole wiki, a section missing from a page that was already translated is now reported instead of added, because whoever wrote that version may have left it out. Pages with no translation yet are still translated in full. To fill a page that already has a translation, ask for that page by name.
+- translations: adds the language to the wiki if it is not there yet, keeps the original order of pages and sections, translates the front page's title and introduction, and leaves the wiki's rules page untranslated.
+
+### Added
+
+- translations: the report now lists links in existing translations that lead into another language, and translated pages that look like the translation of a page but were never connected to it.
+
 ## 0.29.0
 
 ### Changed
