@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.32.0
+
+### Changed
+
+- translations: one term reads the same on every translated page. Before translating, the skill settles a single rendering for each recurring term, and how the reader is addressed, such as formal or informal "you". It takes them from a dictionary you name, else from the pages already translated, and lists new or conflicting renderings in the report for you to check.
+- translations: a translation keeps the voice of the original. A manual that speaks to the reader and gives steps stays that way in translation, rather than turning impersonal.
+- translations: a language added this run is translated with fewer calls, and a handful of page titles no longer waits for a separate agent.
+
 ## 0.31.0
 
 ### Changed
