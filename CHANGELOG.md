@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.36.0
+
+### Changed
+
+- translations: translating a page, and proofreading it for phrases copied from the original, no longer changes what a sentence says. A page stating how things are, such as "A link sits on the noun", stays a statement about the link, instead of becoming a description of what people do with it ("links are put on nouns") or an instruction. Where no natural wording keeps the statement, the report names the place for you.
+
 ## 0.35.0
 
 ### Changed
