@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.34.0
+
+### Changed
+
+- translations: everything a run translates is proofread before the run ends, for phrases that copy the original word for word where the language would say it otherwise. A separate AI helper that translated none of it reads each page as a native reader, checks the meaning against the original and rewrites those phrases in the language's own words. Text written by people is not touched. The report says how many places were rewritten on each page and lists any it left because rewording would change the meaning. A run takes longer and costs more than before.
+
 ## 0.33.0
 
 ### Changed
