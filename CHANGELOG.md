@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.35.0
+
+### Changed
+
+- translations: the AI helpers that translate and proofread pages work one after another rather than all at once, and each one's work is checked before the next starts. A mistake in the instructions they share is then caught on the first few pages instead of repeating across the whole wiki. A run takes longer.
+
 ## 0.34.0
 
 ### Changed
