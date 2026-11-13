@@ -48,11 +48,3 @@ For local development, use the repository path instead of `wikilayer/skills`:
 codex plugin marketplace add /path/to/wikilayer-skills
 codex plugin add wikilayer@wikilayer
 ```
-
-## Lines of Code
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wikilayer/skills/main/.github/loc-history-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/wikilayer/skills/main/.github/loc-history-light.svg">
-  <img src="https://raw.githubusercontent.com/wikilayer/skills/main/.github/loc-history.svg" alt="Lines of code over time">
-</picture>

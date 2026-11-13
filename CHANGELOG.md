@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.37.2
+
+### Changed
+
+- The repository no longer keeps a lines-of-code chart, so the Claude plugin directory accepts it. Nothing in the skills changed.
+
 ## 0.37.1
 
 ### Changed
