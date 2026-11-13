@@ -1,9 +1,10 @@
 # wikilayer-skills
 
-Audit and translate any [Wikilayer](https://wikilayer.org) wiki from Claude Code or Codex. Three skills: `lint` and `review` are advisory (they recommend, never edit); `translations` also writes, filling a wiki's missing translations.
+Start with, audit and translate any [Wikilayer](https://wikilayer.org) wiki from Claude Code or Codex. Four skills: `get-started` walks a new user from no wiki to a first page; `lint` and `review` are advisory (they recommend, never edit); `translations` also writes, filling a wiki's missing translations.
 
 The two advisory skills split by what a finding costs. Nothing lint reports can become false, so it is fixed in passing; everything review reports can, so the author weighs each finding.
 
+- **`wikilayer:get-started`**: first steps. Says what Wikilayer does, or, when asked to start, finds or creates a wiki, reads its rules, writes a first page on the subject you give and hands back its link.
 - **`wikilayer:lint`**: the text. Marks, link wording, voice, a block that lost its thread, words that say nothing. Run last, after review and substantive edits, for final polish.
 - **`wikilayer:review`**: the tree and the claims. Where each node sits, what a title promises against what its body holds, bodies restating what the engine already keeps, contradictions across pages, page size and reachability. Review the whole page after recent edits, once you have read every touched page yourself, whole; run a whole-wiki audit explicitly for major releases or periodic checks.
 - **`wikilayer:translations`**: cross-language parity. Audits coverage and fills the missing translations for a target language. Writes to the wiki, so it follows the authoring rules like any other edit.
@@ -19,7 +20,7 @@ claude plugin marketplace add wikilayer/skills
 claude plugin install wikilayer@wikilayer
 ```
 
-Invoke a skill as `/wikilayer:lint`, `/wikilayer:review`, or `/wikilayer:translations`.
+Invoke a skill as `/wikilayer:get-started`, `/wikilayer:lint`, `/wikilayer:review`, or `/wikilayer:translations`.
 
 Update it with:
 
@@ -39,7 +40,7 @@ codex plugin marketplace add wikilayer/skills
 codex plugin add wikilayer@wikilayer
 ```
 
-Start a new Codex session, then invoke a skill as `$wikilayer:lint`, `$wikilayer:review`, or `$wikilayer:translations`.
+Start a new Codex session, then invoke a skill as `$wikilayer:get-started`, `$wikilayer:lint`, `$wikilayer:review`, or `$wikilayer:translations`.
 
 For local development, use the repository path instead of `wikilayer/skills`:
 

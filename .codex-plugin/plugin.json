@@ -1,7 +1,7 @@
 {
   "name": "wikilayer",
-  "version": "0.36.0",
-  "description": "Audit and translate Wikilayer wikis from Codex.",
+  "version": "0.37.0",
+  "description": "Start, audit and translate Wikilayer wikis from Codex.",
   "author": {
     "name": "Wikilayer",
     "email": "info@wikilayer.org",
@@ -10,12 +10,12 @@
   "homepage": "https://wikilayer.org/smee-again/wikilayer-howto/8218-advanced-usage",
   "repository": "https://github.com/wikilayer/skills",
   "license": "MIT",
-  "keywords": ["wikilayer", "skills", "lint", "review", "translations"],
+  "keywords": ["wikilayer", "skills", "get-started", "lint", "review", "translations"],
   "skills": "./skills/",
   "interface": {
     "displayName": "Wikilayer",
-    "shortDescription": "Audit and translate Wikilayer wikis.",
-    "longDescription": "Lint Wikilayer prose, review a wiki as one body of work, and bring its translations into parity.",
+    "shortDescription": "Start, audit and translate Wikilayer wikis.",
+    "longDescription": "Take the first steps from no wiki to a first page, lint Wikilayer prose, review a wiki as one body of work, and bring its translations into parity.",
     "developerName": "Wikilayer",
     "category": "Productivity",
     "capabilities": ["Interactive", "Write"],

@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.37.0
+
+### Added
+
+- get-started: a skill for your first steps with Wikilayer. Run it as `/wikilayer:get-started` in Claude Code or `$wikilayer:get-started` in Codex, or just ask what Wikilayer can do or ask to start a wiki. Asked what it can do, it answers and writes nothing. Asked to start, it lists the wikis your account can open and uses the one you name, or creates a new private one. If the wiki has a rules page, the page where its owner writes how the wiki is to be written, it reads that first. Then it writes a first page on the subject you give and gives you its link. Before making a wiki public, sharing a page by link or deleting pages, it asks you, unless you have just asked for that.
+- The plugin now has an icon.
+
+Update the plugin as usual; nothing else is needed.
+
 ## 0.36.0
 
 ### Changed
