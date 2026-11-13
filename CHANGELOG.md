@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.37.1
+
+### Changed
+
+- The plugin's listing now links to Wikilayer's documentation, support, privacy and terms pages. Nothing in the skills changed.
+
 ## 0.37.0
 
 ### Added

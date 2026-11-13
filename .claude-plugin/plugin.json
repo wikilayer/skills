@@ -1,12 +1,19 @@
 {
   "name": "wikilayer",
+  "displayName": "Wikilayer",
   "description": "Start, audit and translate any Wikilayer wiki, or a single page in it: first steps from no wiki to a first page, lint for what can never become false, review for what the wiki asserts, and a cross-language translations pass that fills missing translations.",
-  "version": "0.37.0",
+  "version": "0.37.1",
   "author": {
-    "name": "Maxim Oransky",
-    "email": "info@wikilayer.org"
+    "name": "Maxim Oranskiy PR Novi Sad",
+    "email": "info@wikilayer.org",
+    "url": "https://wikilayer.org/"
   },
-  "homepage": "https://github.com/wikilayer/skills",
+  "homepage": "https://wikilayer.org/",
   "repository": "https://github.com/wikilayer/skills",
+  "documentationUrl": "https://wikilayer.org/smee-again/wikilayer-howto/en/59340-wikilayer-skills",
+  "supportUrl": "https://wikilayer.org/legal/support",
+  "privacyPolicyUrl": "https://wikilayer.org/legal/privacy",
+  "termsOfServiceUrl": "https://wikilayer.org/legal/terms",
+  "keywords": ["wiki", "knowledge base", "documentation", "translation", "proofreading"],
   "license": "MIT"
 }
